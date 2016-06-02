@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+using Livet;
+
+namespace STGApp.Models
+{
+	/// <summary>
+	/// MainWindowのModel機能を提供するクラス
+	/// </summary>
+	public class Model : NotificationObject
+	{
+		/*
+         * NotificationObjectはプロパティ変更通知の仕組みを実装したオブジェクトです。
+         */
+	}
+}
