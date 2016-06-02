@@ -21,4 +21,6 @@ OpenCover.Console -register:user -target:"%nunit_home%\nunit-console\nunit3-cons
 
 rem レポートの生成
 ReportGenerator "Result\result.xml" Result\html
-pause
+
+rem レポートの表示
+start Result\html\index.htm

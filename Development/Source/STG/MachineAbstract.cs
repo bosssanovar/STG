@@ -68,7 +68,7 @@ namespace STG
 		/// <param name="e"></param>
 		private void _MachinePosition_MachinePositionChanged(object sender, MachinePositionChangedEventArgs e)
 		{
-			MachinePositionChanged?.Invoke(sender, e);
+			MachinePositionChanged?.Invoke(this, e);
 		}
 		#endregion
 
