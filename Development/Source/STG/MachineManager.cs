@@ -25,7 +25,7 @@ namespace STG
 
 			foreach (var machine in _Machines)
 			{
-				if (machine == null) continue;
+				Contract.Assume(machine != null);
 				machine.MachinePositionChanged += Machine_MachinePositionChanged;
 			}
 		}
