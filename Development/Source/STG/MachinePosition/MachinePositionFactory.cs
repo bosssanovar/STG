@@ -6,13 +6,13 @@ namespace STG.MachinePosition
 	/// <summary>
 	/// <see cref="IMachinePosition"/>を実装した実態を生成するFactoryクラス。
 	/// </summary>
-	public class MachinePositionFactory
+	internal class MachinePositionFactory
 	{
 		/// <summary>
 		/// <see cref="IMachinePosition"/>を実装したインスタンスを取得します。
 		/// </summary>
 		/// <returns></returns>
-		public static IMachinePosition CreateMachinePositionInstance(Position initialPosition)
+		internal static IMachinePosition CreateMachinePositionInstance(Position initialPosition)
 		{
 			Contract.Ensures(Contract.Result<IMachinePosition>() != null);
 
