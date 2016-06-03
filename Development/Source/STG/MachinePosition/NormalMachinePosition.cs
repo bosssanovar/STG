@@ -14,7 +14,7 @@ namespace STG.MachinePosition
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="position"></param>
-		public NormalMachinePosition(Position position) : base(position)
+		internal NormalMachinePosition(Position position) : base(position)
 		{
 		}
 

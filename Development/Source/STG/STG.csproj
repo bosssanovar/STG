@@ -190,6 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MachineAbstract.cs" />
+    <Compile Include="MachineFactory.cs" />
     <Compile Include="MachineManager.cs" />
     <Compile Include="MachinePosition\AreaEndLimit.cs" />
     <Compile Include="MachinePosition\IMachinePosition.cs" />
