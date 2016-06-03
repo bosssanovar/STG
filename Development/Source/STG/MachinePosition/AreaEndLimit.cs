@@ -12,7 +12,7 @@ namespace STG.MachinePosition
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="postProcess"></param>
-		public AreaEndLimit(IMachinePosition postProcess) : base(postProcess)
+		internal AreaEndLimit(IMachinePosition postProcess) : base(postProcess)
 		{
 			Contract.Requires<ArgumentNullException>(postProcess != null);
 		}

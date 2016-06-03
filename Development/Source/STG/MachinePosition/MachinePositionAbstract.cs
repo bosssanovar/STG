@@ -9,7 +9,7 @@ namespace STG.MachinePosition
 	abstract internal class MachinePositionAbstract : IMachinePosition
 	{
 		#region コンストラクタ/デストラクタ
-		public MachinePositionAbstract(Position position)
+		internal MachinePositionAbstract(Position position)
 		{
 			Position = position;
 		}

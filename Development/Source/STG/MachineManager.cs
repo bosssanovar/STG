@@ -16,16 +16,17 @@ namespace STG
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
-		/// <param name="machines"></param>
-		public MachineManager(IList<MachineAbstract> machines)
+		/// <param name="machines">※nullな要素は除外されます</param>
+		internal MachineManager(IList<MachineAbstract> machines)
 		{
 			Contract.Requires<ArgumentNullException>(machines != null);
 
-			_Machines = machines;
+			_Machines = machines.Where(m => m != null).ToList();
 
 			foreach (var machine in _Machines)
 			{
-				if (machine != null) machine.MachinePositionChanged += Machine_MachinePositionChanged;
+				if (machine == null) continue;
+				machine.MachinePositionChanged += Machine_MachinePositionChanged;
 			}
 		}
 
@@ -65,7 +66,7 @@ namespace STG
 
 
 		#region メソッド
-		
+
 #pragma warning disable CSE0003 // Use expression-bodied members
 		/// <summary>
 		/// 自機を取得します。

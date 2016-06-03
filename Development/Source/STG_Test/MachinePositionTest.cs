@@ -60,6 +60,16 @@ namespace STG_Test
 		}
 
 		[Test]
+		public void NormalMachinePosition_MoveToLeft_イベント登録なし()
+		{
+			var machinePosition = new NormalMachinePosition(new Position(10, 10));
+			
+			machinePosition.MoveToLeft();
+
+			Assert.Pass();
+		}
+
+		[Test]
 		public void NormalMachinePosition_MoveToRight()
 		{
 			var machinePosition = new NormalMachinePosition(new Position(10, 10));
@@ -114,6 +124,17 @@ namespace STG_Test
 		{
 			Assert.Throws<ArgumentNullException>(() => new AreaEndLimit(null));
 			Assert.DoesNotThrow(() => new AreaEndLimit(new NormalMachinePosition(new Position(0, 0))));
+		}
+
+		[Test]
+		public void AreaEndLimit_MoveLeft_イベント登録なし()
+		{
+			FieldSizeFactory.GetFieldSizeInstance().SetFieldSize(new Position(0, 0), new Position(100, 100));
+
+			var limit = new AreaEndLimit(new NormalMachinePosition(new Position(50, 50)));
+			limit.MoveToLeft();
+
+			Assert.Pass();
 		}
 
 		[TestCase(FieldSize.DefaultMinX, FieldSize.DefaultMinY, FieldSize.DefaultMinX, FieldSize.DefaultMinY, false)]

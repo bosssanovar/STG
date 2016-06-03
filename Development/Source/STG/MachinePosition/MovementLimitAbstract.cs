@@ -15,7 +15,7 @@ namespace STG.MachinePosition
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="postProcess"></param>
-		public MovementLimitAbstract(IMachinePosition postProcess)
+		internal MovementLimitAbstract(IMachinePosition postProcess)
 		{
 			Contract.Requires<ArgumentNullException>(postProcess != null);
 

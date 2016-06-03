@@ -18,7 +18,7 @@ namespace STG
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="machinePosition"></param>
-		public MachineAbstract(IMachinePosition machinePosition)
+		internal MachineAbstract(IMachinePosition machinePosition)
 		{
 			Contract.Requires<ArgumentNullException>(machinePosition != null);
 
@@ -54,7 +54,7 @@ namespace STG
 		/// <summary>
 		/// 機体位置が変更された際に発行されるイベント
 		/// </summary>
-		public event EventHandler<MachinePositionChangedEventArgs> MachinePositionChanged;
+		internal event EventHandler<MachinePositionChangedEventArgs> MachinePositionChanged;
 
 		#endregion
 

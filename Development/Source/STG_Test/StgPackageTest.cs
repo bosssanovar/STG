@@ -85,6 +85,7 @@ namespace STG_Test
 		public void MachineManager_コンストラクタ()
 		{
 			Assert.Throws<ArgumentNullException>(() => new MachineManager(null));
+
 			Assert.DoesNotThrow(() => new MachineManager(new List<MachineAbstract>() { new OwnMachine(MachinePositionFactory.CreateMachinePositionInstance(new Position(50, 30))) }));
 		}
 
@@ -120,6 +121,50 @@ namespace STG_Test
 				default:
 					break;
 			}
+		}
+
+		[TestCase(Position.CompareResult.Right, 50, 50, 51, 50)]
+		[TestCase(Position.CompareResult.Left, 50, 50, 49, 50)]
+		[TestCase(Position.CompareResult.Upper, 50, 50, 50, 51)]
+		[TestCase(Position.CompareResult.Under, 50, 50, 50, 49)]
+		public void MachineManager_移動_イベント登録なし(Position.CompareResult direction, int initX, int initY, int resultX, int resultY)
+		{
+			var own = new OwnMachine(MachinePositionFactory.CreateMachinePositionInstance(new Position(initX, initY)));
+			var manager = new MachineManager(new List<MachineAbstract>() { own });
+
+			switch (direction)
+			{
+				case Position.CompareResult.Right:
+					manager.GetOwnMachine().MoveToRight();
+					break;
+				case Position.CompareResult.Upper:
+					manager.GetOwnMachine().MoveToUpper();
+					break;
+				case Position.CompareResult.Left:
+					manager.GetOwnMachine().MoveToLeft();
+					break;
+				case Position.CompareResult.Under:
+					manager.GetOwnMachine().MoveToUnder();
+					break;
+				default:
+					break;
+			}
+
+			Assert.Pass();
+		}
+	}
+
+	[TestFixture]
+	class MachineFactoryTest
+	{
+		[Test]
+		public void MachineFactory_CreateMachines()
+		{
+			var manager = MachineFactory.CreateMachines(new Position(50, 30));
+
+			Assert.That(manager is MachineManager);
+			Assert.That(manager.GetOwnMachine().Position.X == 50);
+			Assert.That(manager.GetOwnMachine().Position.Y == 30);
 		}
 	}
 }

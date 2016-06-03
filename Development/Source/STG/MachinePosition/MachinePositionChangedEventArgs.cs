@@ -14,7 +14,7 @@ namespace STG.MachinePosition
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="position"></param>
-		public MachinePositionChangedEventArgs(Position position)
+		internal MachinePositionChangedEventArgs(Position position)
 		{
 			Position = position;
 		}
