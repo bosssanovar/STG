@@ -28,9 +28,9 @@ namespace STG.Parameters
 
 
 		/// <summary>
-		/// Positionの比較結果列挙
+		/// Positionの比較結果の方向列挙
 		/// </summary>
-		public enum CompareResult
+		public enum Direction
 		{
 			/// <summary> 同位置 </summary>
 			Same,
@@ -75,20 +75,20 @@ namespace STG.Parameters
 		/// </summary>
 		/// <param name="target"></param>
 		/// <returns></returns>
-		public CompareResult Compare(Position target)
+		public Direction Compare(Position target)
 		{
-			if (X == target.X && Y == target.Y) return CompareResult.Same;
+			if (X == target.X && Y == target.Y) return Direction.Same;
 
 			var angle = System.Math.Atan2(target.Y - Y, target.X - X) * (180 / System.Math.PI);
 
-			if (angle == 0) return CompareResult.Right;
-			else if (angle > 0 && angle < 90) return CompareResult.UpperRight;
-			else if (angle == 90) return CompareResult.Upper;
-			else if (angle > 90 && angle < 180) return CompareResult.UpperLeft;
-			else if (angle == 180) return CompareResult.Left;
-			else if (angle < 0 && angle > -90) return CompareResult.LowerRight;
-			else if (angle == -90) return CompareResult.Under;
-			else return CompareResult.LowerLeft; //(angle < -90 && angle > -180)
+			if (angle == 0) return Direction.Right;
+			else if (angle > 0 && angle < 90) return Direction.UpperRight;
+			else if (angle == 90) return Direction.Upper;
+			else if (angle > 90 && angle < 180) return Direction.UpperLeft;
+			else if (angle == 180) return Direction.Left;
+			else if (angle < 0 && angle > -90) return Direction.LowerRight;
+			else if (angle == -90) return Direction.Under;
+			else return Direction.LowerLeft; //(angle < -90 && angle > -180)
 		}
 
 		#endregion

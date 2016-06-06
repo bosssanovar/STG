@@ -73,17 +73,17 @@
 		/// <returns></returns>
 		public bool IsIntoField(Position pos)
 		{
-			if (Max.Compare(pos) == Position.CompareResult.Same) return true;
+			if (Max.Compare(pos) == Position.Direction.Same) return true;
 
-			if (Min.Compare(pos) == Position.CompareResult.Same) return true;
+			if (Min.Compare(pos) == Position.Direction.Same) return true;
 
-			if (Min.Compare(pos) == Position.CompareResult.Upper
-				|| Min.Compare(pos) == Position.CompareResult.UpperRight
-				|| Min.Compare(pos) == Position.CompareResult.Right)
+			if (Min.Compare(pos) == Position.Direction.Upper
+				|| Min.Compare(pos) == Position.Direction.UpperRight
+				|| Min.Compare(pos) == Position.Direction.Right)
 			{
-				if (Max.Compare(pos) == Position.CompareResult.Left
-					|| Max.Compare(pos) == Position.CompareResult.Under
-					|| Max.Compare(pos) == Position.CompareResult.LowerLeft)
+				if (Max.Compare(pos) == Position.Direction.Left
+					|| Max.Compare(pos) == Position.Direction.Under
+					|| Max.Compare(pos) == Position.Direction.LowerLeft)
 				{
 					return true;
 				}

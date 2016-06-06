@@ -187,16 +187,16 @@ namespace STG_Test
 
 		}
 
-		[TestCase(0, 0, Position.CompareResult.Same)]
-		[TestCase(1, 0, Position.CompareResult.Right)]
-		[TestCase(1, 1, Position.CompareResult.UpperRight)]
-		[TestCase(0, 1, Position.CompareResult.Upper)]
-		[TestCase(-1, 1, Position.CompareResult.UpperLeft)]
-		[TestCase(-1, 0, Position.CompareResult.Left)]
-		[TestCase(-1, -1, Position.CompareResult.LowerLeft)]
-		[TestCase(0, -1, Position.CompareResult.Under)]
-		[TestCase(1, -1, Position.CompareResult.LowerRight)]
-		public void Position_Compare結果(int x, int y, Position.CompareResult result)
+		[TestCase(0, 0, Position.Direction.Same)]
+		[TestCase(1, 0, Position.Direction.Right)]
+		[TestCase(1, 1, Position.Direction.UpperRight)]
+		[TestCase(0, 1, Position.Direction.Upper)]
+		[TestCase(-1, 1, Position.Direction.UpperLeft)]
+		[TestCase(-1, 0, Position.Direction.Left)]
+		[TestCase(-1, -1, Position.Direction.LowerLeft)]
+		[TestCase(0, -1, Position.Direction.Under)]
+		[TestCase(1, -1, Position.Direction.LowerRight)]
+		public void Position_Compare結果(int x, int y, Position.Direction result)
 		{
 			var p = new Position(0, 0);
 			var t = new Position(x, y);
