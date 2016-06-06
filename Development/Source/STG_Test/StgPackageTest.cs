@@ -24,11 +24,11 @@ namespace STG_Test
 			Assert.That(own.Position.Y == y);
 		}
 
-		[TestCase(Position.CompareResult.Right, 50, 50, 51, 50)]
-		[TestCase(Position.CompareResult.Left, 50, 50, 49, 50)]
-		[TestCase(Position.CompareResult.Upper, 50, 50, 50, 51)]
-		[TestCase(Position.CompareResult.Under, 50, 50, 50, 49)]
-		public void OwnMachineTest_移動(Position.CompareResult direction, int initX, int initY, int resultX, int resultY)
+		[TestCase(Position.Direction.Right, 50, 50, 51, 50)]
+		[TestCase(Position.Direction.Left, 50, 50, 49, 50)]
+		[TestCase(Position.Direction.Upper, 50, 50, 50, 51)]
+		[TestCase(Position.Direction.Under, 50, 50, 50, 49)]
+		public void OwnMachineTest_移動(Position.Direction direction, int initX, int initY, int resultX, int resultY)
 		{
 			var own = new OwnMachine(MachinePositionFactory.CreateMachinePositionInstance(new Position(initX, initY)));
 			own.MachinePositionChanged += (sender, e) =>
@@ -40,16 +40,16 @@ namespace STG_Test
 
 			switch (direction)
 			{
-				case Position.CompareResult.Right:
+				case Position.Direction.Right:
 					own.MoveToRight();
 					break;
-				case Position.CompareResult.Upper:
+				case Position.Direction.Upper:
 					own.MoveToUpper();
 					break;
-				case Position.CompareResult.Left:
+				case Position.Direction.Left:
 					own.MoveToLeft();
 					break;
-				case Position.CompareResult.Under:
+				case Position.Direction.Under:
 					own.MoveToUnder();
 					break;
 				default:
@@ -89,11 +89,11 @@ namespace STG_Test
 			Assert.DoesNotThrow(() => new MachineManager(new List<MachineAbstract>() { new OwnMachine(MachinePositionFactory.CreateMachinePositionInstance(new Position(50, 30))) }));
 		}
 
-		[TestCase(Position.CompareResult.Right, 50, 50, 51, 50)]
-		[TestCase(Position.CompareResult.Left, 50, 50, 49, 50)]
-		[TestCase(Position.CompareResult.Upper, 50, 50, 50, 51)]
-		[TestCase(Position.CompareResult.Under, 50, 50, 50, 49)]
-		public void MachineManager_移動(Position.CompareResult direction, int initX, int initY, int resultX, int resultY)
+		[TestCase(Position.Direction.Right, 50, 50, 51, 50)]
+		[TestCase(Position.Direction.Left, 50, 50, 49, 50)]
+		[TestCase(Position.Direction.Upper, 50, 50, 50, 51)]
+		[TestCase(Position.Direction.Under, 50, 50, 50, 49)]
+		public void MachineManager_移動(Position.Direction direction, int initX, int initY, int resultX, int resultY)
 		{
 			var own = new OwnMachine(MachinePositionFactory.CreateMachinePositionInstance(new Position(initX, initY)));
 			var manager = new MachineManager(new List<MachineAbstract>() { own });
@@ -106,16 +106,16 @@ namespace STG_Test
 
 			switch (direction)
 			{
-				case Position.CompareResult.Right:
+				case Position.Direction.Right:
 					manager.GetOwnMachine().MoveToRight();
 					break;
-				case Position.CompareResult.Upper:
+				case Position.Direction.Upper:
 					manager.GetOwnMachine().MoveToUpper();
 					break;
-				case Position.CompareResult.Left:
+				case Position.Direction.Left:
 					manager.GetOwnMachine().MoveToLeft();
 					break;
-				case Position.CompareResult.Under:
+				case Position.Direction.Under:
 					manager.GetOwnMachine().MoveToUnder();
 					break;
 				default:
@@ -123,27 +123,27 @@ namespace STG_Test
 			}
 		}
 
-		[TestCase(Position.CompareResult.Right, 50, 50, 51, 50)]
-		[TestCase(Position.CompareResult.Left, 50, 50, 49, 50)]
-		[TestCase(Position.CompareResult.Upper, 50, 50, 50, 51)]
-		[TestCase(Position.CompareResult.Under, 50, 50, 50, 49)]
-		public void MachineManager_移動_イベント登録なし(Position.CompareResult direction, int initX, int initY, int resultX, int resultY)
+		[TestCase(Position.Direction.Right, 50, 50, 51, 50)]
+		[TestCase(Position.Direction.Left, 50, 50, 49, 50)]
+		[TestCase(Position.Direction.Upper, 50, 50, 50, 51)]
+		[TestCase(Position.Direction.Under, 50, 50, 50, 49)]
+		public void MachineManager_移動_イベント登録なし(Position.Direction direction, int initX, int initY, int resultX, int resultY)
 		{
 			var own = new OwnMachine(MachinePositionFactory.CreateMachinePositionInstance(new Position(initX, initY)));
 			var manager = new MachineManager(new List<MachineAbstract>() { own });
 
 			switch (direction)
 			{
-				case Position.CompareResult.Right:
+				case Position.Direction.Right:
 					manager.GetOwnMachine().MoveToRight();
 					break;
-				case Position.CompareResult.Upper:
+				case Position.Direction.Upper:
 					manager.GetOwnMachine().MoveToUpper();
 					break;
-				case Position.CompareResult.Left:
+				case Position.Direction.Left:
 					manager.GetOwnMachine().MoveToLeft();
 					break;
-				case Position.CompareResult.Under:
+				case Position.Direction.Under:
 					manager.GetOwnMachine().MoveToUnder();
 					break;
 				default:
