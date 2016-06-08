@@ -78,6 +78,15 @@ namespace STG
 		}
 #pragma warning restore CSE0003 // Use expression-bodied members
 
+        /// <summary>
+        /// 機体一覧を取得します。
+        /// </summary>
+        /// <returns></returns>
+        public IList<MachineAbstract> GetMachines()
+        {
+            return _Machines;
+        }
+
 		#endregion
 
 		#region Invariant
