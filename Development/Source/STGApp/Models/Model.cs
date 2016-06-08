@@ -168,7 +168,11 @@ namespace STGApp.Models
         /// </summary>
         internal void MoveToLeft()
         {
-            _InputManager.MoveToLeft();
+            System.Threading.Tasks.Task.Run(new Action(() =>
+            {
+                _InputManager.MoveToLeft();
+            }
+            ));
         }
 
         /// <summary>
@@ -176,7 +180,11 @@ namespace STGApp.Models
         /// </summary>
         internal void MoveToRight()
         {
-            _InputManager.MoveToRight();
+            System.Threading.Tasks.Task.Run(new Action(() =>
+            {
+                _InputManager.MoveToRight();
+            }
+            ));
         }
 
         /// <summary>
@@ -184,7 +192,11 @@ namespace STGApp.Models
         /// </summary>
         internal void MoveToUp()
         {
-            _InputManager.MoveToUpper();
+            System.Threading.Tasks.Task.Run(new Action(() =>
+            {
+                _InputManager.MoveToUpper();
+            }
+            ));
         }
 
         /// <summary>
@@ -192,7 +204,11 @@ namespace STGApp.Models
         /// </summary>
         internal void MoveToDown()
         {
-            _InputManager.MoveToUnder();
+            System.Threading.Tasks.Task.Run(new Action(() =>
+            {
+                _InputManager.MoveToUnder();
+            }
+            ));
         }
 
         #endregion
