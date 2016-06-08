@@ -12,13 +12,6 @@
         <vm:MainWindowViewModel/>
     </Window.DataContext>
 
-    <Window.InputBindings>
-        <KeyBinding Key="Left" Command="{Binding MoveToLeftCommand}"/>
-        <KeyBinding Key="Right" Command="{Binding MoveToRightCommand}"/>
-        <KeyBinding Key="Up" Command="{Binding MoveToUpCommand}"/>
-        <KeyBinding Key="Down" Command="{Binding MoveToDownCommand}"/>
-    </Window.InputBindings>
-
     <i:Interaction.Triggers>
 
         <!--Viewに特別な要件が存在しない限りは、トリガーやアクションの自作にこだわらず積極的にコードビハインドを使いましょう -->
@@ -39,7 +32,43 @@
 
     </i:Interaction.Triggers>
 
-    <Canvas Background="MidnightBlue" Height="{Binding FieldHeight}" Width="{Binding FieldWidth}">
-        <Ellipse Fill="White" Height="22" Stroke="Black" Width="22" Canvas.Left="{Binding OwnMachinePositionX}" Canvas.Bottom="{Binding OwnMachinePositionY}" Margin="-11,0, 0,-11"/>
-    </Canvas>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Canvas Background="MidnightBlue" Height="{Binding FieldHeight}" Width="{Binding FieldWidth}">
+            <Ellipse Fill="White" Height="22" Stroke="Black" Width="22" Canvas.Left="{Binding OwnMachinePositionX}" Canvas.Bottom="{Binding OwnMachinePositionY}" Margin="-11,0, 0,-11"/>
+        </Canvas>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <RepeatButton Grid.Row="0" Grid.Column="1" Content="↑" Interval="50" Delay="0" Command="{Binding MoveToUpCommand}"/>
+                <RepeatButton Grid.Row="1" Grid.Column="2" Content="→" Interval="50" Delay="0" Command="{Binding MoveToRightCommand}"/>
+                <RepeatButton Grid.Row="2" Grid.Column="1" Content="↓" Interval="50" Delay="0" Command="{Binding MoveToDownCommand}"/>
+                <RepeatButton Grid.Row="1" Grid.Column="0" Content="←" Interval="50" Delay="0" Command="{Binding MoveToLeftCommand}"/>
+
+            </Grid>
+            
+        </Grid>
+    </Grid>
 </Window>
