@@ -7,17 +7,24 @@
         xmlns:v="clr-namespace:STGApp.Views"
         xmlns:vm="clr-namespace:STGApp.ViewModels"
         Title="MainWindow" Height="350" Width="525">
-    
+
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-    
+
+    <Window.InputBindings>
+        <KeyBinding Key="Left" Command="{Binding MoveToLeftCommand}"/>
+        <KeyBinding Key="Right" Command="{Binding MoveToRightCommand}"/>
+        <KeyBinding Key="Up" Command="{Binding MoveToUpCommand}"/>
+        <KeyBinding Key="Down" Command="{Binding MoveToDownCommand}"/>
+    </Window.InputBindings>
+
     <i:Interaction.Triggers>
-    
-    	<!--Viewに特別な要件が存在しない限りは、トリガーやアクションの自作にこだわらず積極的にコードビハインドを使いましょう -->
-    	<!--Viewのコードビハインドは、基本的にView内で完結するロジックとViewModelからのイベントの受信(専用リスナを使用する)に限るとトラブルが少なくなります -->
-    	<!--Livet1.1からはコードビハインドでViewModelのイベントを受信するためのWeakEventLisnterサポートが追加されています --> 
-        
+
+        <!--Viewに特別な要件が存在しない限りは、トリガーやアクションの自作にこだわらず積極的にコードビハインドを使いましょう -->
+        <!--Viewのコードビハインドは、基本的にView内で完結するロジックとViewModelからのイベントの受信(専用リスナを使用する)に限るとトラブルが少なくなります -->
+        <!--Livet1.1からはコードビハインドでViewModelのイベントを受信するためのWeakEventLisnterサポートが追加されています -->
+
         <!--WindowのContentRenderedイベントのタイミングでViewModelのInitializeメソッドが呼ばれます-->
         <i:EventTrigger EventName="ContentRendered">
             <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
@@ -31,8 +38,8 @@
         <!--WindowのCloseキャンセル処理に対応する場合は、WindowCloseCancelBehaviorの使用を検討してください-->
 
     </i:Interaction.Triggers>
-    
-    <Grid>
-        
-    </Grid>
+
+    <Canvas Background="MidnightBlue">
+        <Ellipse Fill="White" Height="22" Stroke="Black" Width="22" Canvas.Left="{Binding OwnMachinePositionX}" Canvas.Bottom="{Binding OwnMachinePositionY}"/>
+    </Canvas>
 </Window>
