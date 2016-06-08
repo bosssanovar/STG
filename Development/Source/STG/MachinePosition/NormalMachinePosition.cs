@@ -47,25 +47,25 @@ namespace STG.MachinePosition
         /// 次のX軸負方向位置を取得します。
         /// </summary>
         /// <returns></returns>
-        protected override Position GetLeftPosition() => new Position(this.Position.X - 11, this.Position.Y);
+        protected override Position GetLeftPosition() => new Position(this.Position.X - 1, this.Position.Y);
 
         /// <summary>
         /// 次のX軸正方向位置を取得します。
         /// </summary>
         /// <returns></returns>
-        protected override Position GetRightPosition() => new Position(this.Position.X + 11, this.Position.Y);
+        protected override Position GetRightPosition() => new Position(this.Position.X + 1, this.Position.Y);
 
         /// <summary>
         /// 次のY軸負方向位置を取得します。
         /// </summary>
         /// <returns></returns>
-        protected override Position GetUnderPosition() => new Position(this.Position.X, this.Position.Y - 11);
+        protected override Position GetUnderPosition() => new Position(this.Position.X, this.Position.Y - 1);
 
         /// <summary>
         /// 次のY軸正方向位置を取得します。
         /// </summary>
         /// <returns></returns>
-        protected override Position GetUpperPosition() => new Position(this.Position.X, this.Position.Y + 11);
+        protected override Position GetUpperPosition() => new Position(this.Position.X, this.Position.Y + 1);
         #endregion
     }
 }
