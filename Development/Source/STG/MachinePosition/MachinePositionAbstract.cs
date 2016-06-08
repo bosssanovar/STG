@@ -116,7 +116,7 @@ namespace STG.MachinePosition
 			System.Threading.Thread.Sleep(Intarval);
 			MachinePositionChanged?.Invoke(this, new MachinePositionChangedEventArgs(Position));
 #else
-			Task.Run(new Action(() =>
+            System.Threading.Tasks.Task.Run(new Action(() =>
 			{
 				System.Threading.Thread.Sleep(Intarval);
 				MachinePositionChanged?.Invoke(this, new MachinePositionChangedEventArgs(Position));

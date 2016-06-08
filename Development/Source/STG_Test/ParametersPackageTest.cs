@@ -50,27 +50,15 @@ namespace STG_Test
             Assert.That(p.IsIntoField(new Position(x, y)) == isIn);
         }
 
-        [TestCase(-1, -1, false)]
-        [TestCase(-1, 0, false)]
-        [TestCase(-1, 1, false)]
-        [TestCase(-1, -2, false)]
-        [TestCase(-1, 99, false)]
-        [TestCase(-1, 100, false)]
-        [TestCase(-1, 101, false)]
-        [TestCase(1, -1, true)]
-        [TestCase(1, 0, true)]
-        [TestCase(1, 1, true)]
-        [TestCase(1, -2, false)]
-        [TestCase(1, 99, true)]
-        [TestCase(1, 100, false)]
-        [TestCase(1, 101, false)]
-        [TestCase(0, -1, true)]
-        [TestCase(0, 0, true)]
-        [TestCase(0, 1, true)]
-        [TestCase(0, -2, false)]
-        [TestCase(0, 99, true)]
-        [TestCase(0, 100, false)]
-        [TestCase(0, 101, false)]
+        [TestCase(FieldSize.DefaultMinX, FieldSize.DefaultMinY, true)]
+        [TestCase(FieldSize.DefaultMinX + FieldSize.DefaultUnitMovement, FieldSize.DefaultMinY, true)]
+        [TestCase(FieldSize.DefaultMinX, FieldSize.DefaultMinY + FieldSize.DefaultUnitMovement, true)]
+        [TestCase(FieldSize.DefaultMinX + FieldSize.DefaultUnitMovement, FieldSize.DefaultMinY + FieldSize.DefaultUnitMovement, true)]
+        [TestCase(FieldSize.DefaultMinX - 1, FieldSize.DefaultMinY - 1, false)]
+        [TestCase(FieldSize.DefaultMinX - 1, FieldSize.DefaultMinY, false)]
+        [TestCase(FieldSize.DefaultMinX, FieldSize.DefaultMinY - 1, true)]
+        [TestCase(FieldSize.DefaultMinX - FieldSize.DefaultUnitMovement, FieldSize.DefaultMinY, false)]
+        [TestCase(FieldSize.DefaultMinX, FieldSize.DefaultMinY - FieldSize.DefaultUnitMovement, true)]
         public void FieldSize_1つy座標正方向はフィールド内か(int x, int y, bool isIn)
         {
             var p = new FieldSize();
@@ -78,37 +66,15 @@ namespace STG_Test
             Assert.That(p.IsintoFieldNextYUpper(new Position(x, y)) == isIn);
         }
 
-        [TestCase(0, 95, 4, true)]
-        [TestCase(0, 95, 5, true)]
-        [TestCase(0, 95, 6, false)]
-        public void FieldSize_指定分y座標正方向はフィールド内か(int x, int y, int offset, bool isIn)
-        {
-            var p = new FieldSize();
-            p.SetFieldSize(new Position(0, 0), new Position(100, 100));
-            Assert.That(p.IsintoFieldNextYUpper(new Position(x, y), offset) == isIn);
-        }
-
-        [TestCase(-1, -1, false)]
-        [TestCase(-1, 0, false)]
-        [TestCase(-1, 1, false)]
-        [TestCase(-1, 2, false)]
-        [TestCase(-1, 100, false)]
-        [TestCase(-1, 101, false)]
-        [TestCase(-1, 102, false)]
-        [TestCase(1, -1, false)]
-        [TestCase(1, 0, false)]
-        [TestCase(1, 1, true)]
-        [TestCase(1, 2, true)]
-        [TestCase(1, 100, true)]
-        [TestCase(1, 101, true)]
-        [TestCase(1, 102, false)]
-        [TestCase(0, -1, false)]
-        [TestCase(0, 0, false)]
-        [TestCase(0, 1, true)]
-        [TestCase(0, 2, true)]
-        [TestCase(0, 100, true)]
-        [TestCase(0, 101, true)]
-        [TestCase(0, 102, false)]
+        [TestCase(FieldSize.DefaultMinX, FieldSize.DefaultMinY, false)]
+        [TestCase(FieldSize.DefaultMinX + FieldSize.DefaultUnitMovement, FieldSize.DefaultMinY, false)]
+        [TestCase(FieldSize.DefaultMinX, FieldSize.DefaultMinY + FieldSize.DefaultUnitMovement, true)]
+        [TestCase(FieldSize.DefaultMinX + FieldSize.DefaultUnitMovement, FieldSize.DefaultMinY + FieldSize.DefaultUnitMovement, true)]
+        [TestCase(FieldSize.DefaultMinX - 1, FieldSize.DefaultMinY - 1, false)]
+        [TestCase(FieldSize.DefaultMinX - 1, FieldSize.DefaultMinY, false)]
+        [TestCase(FieldSize.DefaultMinX, FieldSize.DefaultMinY - 1, false)]
+        [TestCase(FieldSize.DefaultMinX - FieldSize.DefaultUnitMovement, FieldSize.DefaultMinY, false)]
+        [TestCase(FieldSize.DefaultMinX, FieldSize.DefaultMinY - FieldSize.DefaultUnitMovement, false)]
         public void FieldSize_1つy座標負方向はフィールド内か(int x, int y, bool isIn)
         {
             var p = new FieldSize();
@@ -116,37 +82,15 @@ namespace STG_Test
             Assert.That(p.IsintoFieldNextYLower(new Position(x, y)) == isIn);
         }
 
-        [TestCase(0, 5, 4, true)]
-        [TestCase(0, 5, 5, true)]
-        [TestCase(0, 5, 6, false)]
-        public void FieldSize_指定分y座標負方向はフィールド内か(int x, int y, int offset, bool isIn)
-        {
-            var p = new FieldSize();
-            p.SetFieldSize(new Position(0, 0), new Position(100, 100));
-            Assert.That(p.IsintoFieldNextYLower(new Position(x, y), offset) == isIn);
-        }
-
-        [TestCase(-1, -1, false)]
-        [TestCase(0, -1, false)]
-        [TestCase(1, -1, false)]
-        [TestCase(-2, -1, false)]
-        [TestCase(99, -1, false)]
-        [TestCase(100, -1, false)]
-        [TestCase(101, -1, false)]
-        [TestCase(-1, 1, true)]
-        [TestCase(0, 1, true)]
-        [TestCase(1, 1, true)]
-        [TestCase(-2, 1, false)]
-        [TestCase(99, 1, true)]
-        [TestCase(100, 1, false)]
-        [TestCase(101, 1, false)]
-        [TestCase(-1, 0, true)]
-        [TestCase(0, 0, true)]
-        [TestCase(1, 0, true)]
-        [TestCase(-2, 0, false)]
-        [TestCase(99, 0, true)]
-        [TestCase(100, 0, false)]
-        [TestCase(101, 0, false)]
+        [TestCase(FieldSize.DefaultMinX, FieldSize.DefaultMinY, true)]
+        [TestCase(FieldSize.DefaultMinX + FieldSize.DefaultUnitMovement, FieldSize.DefaultMinY, true)]
+        [TestCase(FieldSize.DefaultMinX, FieldSize.DefaultMinY + FieldSize.DefaultUnitMovement, true)]
+        [TestCase(FieldSize.DefaultMinX + FieldSize.DefaultUnitMovement, FieldSize.DefaultMinY + FieldSize.DefaultUnitMovement, true)]
+        [TestCase(FieldSize.DefaultMinX - 1, FieldSize.DefaultMinY - 1, false)]
+        [TestCase(FieldSize.DefaultMinX - 1, FieldSize.DefaultMinY, true)]
+        [TestCase(FieldSize.DefaultMinX, FieldSize.DefaultMinY - 1, false)]
+        [TestCase(FieldSize.DefaultMinX - FieldSize.DefaultUnitMovement, FieldSize.DefaultMinY, true)]
+        [TestCase(FieldSize.DefaultMinX, FieldSize.DefaultMinY - FieldSize.DefaultUnitMovement, false)]
         public void FieldSize_1つx座標正方向はフィールド内か(int x, int y, bool isIn)
         {
             var p = new FieldSize();
@@ -154,37 +98,15 @@ namespace STG_Test
             Assert.That(p.IsintoFieldNextXUpper(new Position(x, y)) == isIn);
         }
 
-        [TestCase(95, 0, 4, true)]
-        [TestCase(95, 0, 5, true)]
-        [TestCase(95, 0, 6, false)]
-        public void FieldSize_指定分x座標正方向はフィールド内か(int x, int y, int offset, bool isIn)
-        {
-            var p = new FieldSize();
-            p.SetFieldSize(new Position(0, 0), new Position(100, 100));
-            Assert.That(p.IsintoFieldNextXUpper(new Position(x, y), offset) == isIn);
-        }
-
-        [TestCase(-1, -1, false)]
-        [TestCase(0, -1, false)]
-        [TestCase(1, -1, false)]
-        [TestCase(2, -1, false)]
-        [TestCase(100, -1, false)]
-        [TestCase(101, -1, false)]
-        [TestCase(102, -1, false)]
-        [TestCase(-1, 0, false)]
-        [TestCase(0, 0, false)]
-        [TestCase(1, 0, true)]
-        [TestCase(2, 0, true)]
-        [TestCase(100, 0, true)]
-        [TestCase(101, 0, true)]
-        [TestCase(102, 0, false)]
-        [TestCase(-1, 1, false)]
-        [TestCase(0, 1, false)]
-        [TestCase(1, 1, true)]
-        [TestCase(2, 1, true)]
-        [TestCase(100, 1, true)]
-        [TestCase(101, 1, true)]
-        [TestCase(102, 1, false)]
+        [TestCase(FieldSize.DefaultMinX, FieldSize.DefaultMinY, false)]
+        [TestCase(FieldSize.DefaultMinX + FieldSize.DefaultUnitMovement, FieldSize.DefaultMinY, true)]
+        [TestCase(FieldSize.DefaultMinX, FieldSize.DefaultMinY + FieldSize.DefaultUnitMovement, false)]
+        [TestCase(FieldSize.DefaultMinX + FieldSize.DefaultUnitMovement, FieldSize.DefaultMinY + FieldSize.DefaultUnitMovement, true)]
+        [TestCase(FieldSize.DefaultMinX - 1, FieldSize.DefaultMinY - 1, false)]
+        [TestCase(FieldSize.DefaultMinX - 1, FieldSize.DefaultMinY, false)]
+        [TestCase(FieldSize.DefaultMinX, FieldSize.DefaultMinY - 1, false)]
+        [TestCase(FieldSize.DefaultMinX - FieldSize.DefaultUnitMovement, FieldSize.DefaultMinY, false)]
+        [TestCase(FieldSize.DefaultMinX, FieldSize.DefaultMinY - FieldSize.DefaultUnitMovement, false)]
         public void FieldSize_1つx座標負方向はフィールド内か(int x, int y, bool isIn)
         {
             var p = new FieldSize();
@@ -192,14 +114,14 @@ namespace STG_Test
             Assert.That(p.IsintoFieldNextXLower(new Position(x, y)) == isIn);
         }
 
-        [TestCase(5, 0, 4, true)]
-        [TestCase(5, 0, 5, true)]
-        [TestCase(5, 0, 6, false)]
-        public void FieldSize_指定x座標負方向はフィールド内か(int x, int y, int offset, bool isIn)
+        [Test]
+        public void FieldSize_SetUnitMovement()
         {
             var p = new FieldSize();
-            p.SetFieldSize(new Position(0, 0), new Position(100, 100));
-            Assert.That(p.IsintoFieldNextXLower(new Position(x, y), offset) == isIn);
+            Assert.That(p.UnitMovement == FieldSize.DefaultUnitMovement);
+
+            p.SetUnitMovement(100);
+            Assert.That(p.UnitMovement == 100);
         }
     }
 

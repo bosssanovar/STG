@@ -1,4 +1,5 @@
-﻿using System;
+﻿using STG.Parameters;
+using System;
 using System.Diagnostics.Contracts;
 
 namespace STG.MachinePosition
@@ -28,7 +29,7 @@ namespace STG.MachinePosition
 		/// </summary>
 		public override void MoveToLeft()
 		{
-			if (!Parameters.FieldSizeFactory.GetFieldSizeInstance().IsintoFieldNextXLower(this.Position)) return;
+			if (!FieldSizeFactory.GetFieldSizeInstance().IsintoFieldNextXLower(this.Position)) return;
 
 			_PostProcess.MoveToLeft();
 		}
@@ -39,7 +40,7 @@ namespace STG.MachinePosition
 		/// </summary>
 		public override void MoveToRight()
 		{
-			if (!Parameters.FieldSizeFactory.GetFieldSizeInstance().IsintoFieldNextXUpper(this.Position)) return;
+			if (!FieldSizeFactory.GetFieldSizeInstance().IsintoFieldNextXUpper(this.Position)) return;
 
 			_PostProcess.MoveToRight();
 		}
@@ -50,7 +51,7 @@ namespace STG.MachinePosition
 		/// </summary>
 		public override void MoveToUnder()
 		{
-			if (!Parameters.FieldSizeFactory.GetFieldSizeInstance().IsintoFieldNextYLower(this.Position)) return;
+			if (!FieldSizeFactory.GetFieldSizeInstance().IsintoFieldNextYLower(this.Position)) return;
 
 			_PostProcess.MoveToUnder();
 		}
@@ -61,7 +62,7 @@ namespace STG.MachinePosition
 		/// </summary>
 		public override void MoveToUpper()
 		{
-			if (!Parameters.FieldSizeFactory.GetFieldSizeInstance().IsintoFieldNextYUpper(this.Position)) return;
+			if (!FieldSizeFactory.GetFieldSizeInstance().IsintoFieldNextYUpper(this.Position)) return;
 
 			_PostProcess.MoveToUpper();
 		}

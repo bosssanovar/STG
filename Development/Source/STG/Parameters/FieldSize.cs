@@ -35,6 +35,11 @@
         /// </summary>
         internal const int DefaultMinY = 0;
 
+        /// <summary>
+        /// 機体の単位移動量移動量の初期値
+        /// </summary>
+        internal const int DefaultUnitMovement = 10;
+
         #endregion
 
 
@@ -50,10 +55,24 @@
         /// </summary>
         public Position Min { get; private set; } = new Position() { X = 0, Y = 0 };
 
+        /// <summary>
+        /// 機体の単位移動量を取得します。
+        /// </summary>
+        public int UnitMovement { get; private set; } = DefaultUnitMovement;
+
         #endregion
 
 
         #region メソッド
+
+        /// <summary>
+        /// 機体の単位移動量を変更します。
+        /// </summary>
+        /// <param name="val"></param>
+        public void SetUnitMovement(int val)
+        {
+            UnitMovement = val;
+        }
 
         /// <summary>
         /// フィールドサイズの最大値・最小値を設定します。
@@ -93,64 +112,32 @@
         }
 
         /// <summary>
-        /// 指定した位置からX軸正方向に＋１した位置がフィールド内かを判定します。
+        /// 指定した位置からX軸正方向に<see cref="UnitMovement"/>で指定ピクセル移動した位置がフィールド内かを判定します。
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        public bool IsintoFieldNextXUpper(Position position) => IsintoFieldNextXUpper(position, 1);
+        public bool IsintoFieldNextXUpper(Position position) => IsIntoField(new Position(position.X + UnitMovement, position.Y));
 
         /// <summary>
-        /// 指定した位置からX軸正方向に指定ピクセル移動した位置がフィールド内かを判定します。
+        /// 指定した位置からX軸負方向に<see cref="UnitMovement"/>で指定ピクセル移動した位置がフィールド内かを判定します。
         /// </summary>
         /// <param name="position"></param>
-        /// <param name="offset"></param>
         /// <returns></returns>
-        public bool IsintoFieldNextXUpper(Position position, int offset) => IsIntoField(new Position(position.X + offset, position.Y));
+        public bool IsintoFieldNextXLower(Position position) => IsIntoField(new Position(position.X - UnitMovement, position.Y));
 
         /// <summary>
-        /// 指定した位置からX軸負方向に-1した位置がフィールド内かを判定します。
+        /// 指定した位置からy軸正方向に<see cref="UnitMovement"/>で指定ピクセル移動した位置がフィールド内かを判定します。
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        public bool IsintoFieldNextXLower(Position position) => IsintoFieldNextXLower(position, 1);
+        public bool IsintoFieldNextYUpper(Position position) => IsIntoField(new Position(position.X, position.Y + UnitMovement));
 
         /// <summary>
-        /// 指定した位置からX軸負方向に指定ピクセル移動した位置がフィールド内かを判定します。
-        /// </summary>
-        /// <param name="position"></param>
-        /// <param name="offset"></param>
-        /// <returns></returns>
-        public bool IsintoFieldNextXLower(Position position, int offset) => IsIntoField(new Position(position.X - offset, position.Y));
-
-        /// <summary>
-        /// 指定した位置からy軸正方向に+1した位置がフィールド内かを判定します。
+        /// 指定した位置からY軸負方向に<see cref="UnitMovement"/>で指定ピクセル移動した位置がフィールド内かを判定します。
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        public bool IsintoFieldNextYUpper(Position position) => IsintoFieldNextYUpper(position, 1);
-
-        /// <summary>
-        /// 指定した位置からy軸正方向に指定ピクセル移動した位置がフィールド内かを判定します。
-        /// </summary>
-        /// <param name="position"></param>
-        /// <param name="offset"></param>
-        /// <returns></returns>
-        public bool IsintoFieldNextYUpper(Position position, int offset) => IsIntoField(new Position(position.X, position.Y + offset));
-
-        /// <summary>
-        /// 指定した位置からY軸負方向に-1した位置がフィールド内かを判定します。
-        /// </summary>
-        /// <param name="position"></param>
-        /// <returns></returns>
-        public bool IsintoFieldNextYLower(Position position) => IsintoFieldNextYLower(position, 1);
-
-        /// <summary>
-        /// 指定した位置からY軸負方向に指定ピクセル移動した位置がフィールド内かを判定します。
-        /// </summary>
-        /// <param name="position"></param>
-        /// <param name="offset"></param>
-        /// <returns></returns>
-        public bool IsintoFieldNextYLower(Position position, int offset) => IsIntoField(new Position(position.X, position.Y - offset));
+        public bool IsintoFieldNextYLower(Position position) => IsIntoField(new Position(position.X, position.Y - UnitMovement));
 
         #endregion
     }
