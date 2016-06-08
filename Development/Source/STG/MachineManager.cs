@@ -82,19 +82,16 @@ namespace STG
         /// 機体一覧を取得します。
         /// </summary>
         /// <returns></returns>
-        public IList<MachineAbstract> GetMachines()
-        {
-            return _Machines;
-        }
+        public IList<MachineAbstract> GetMachines() => _Machines;
 
-		#endregion
+        #endregion
 
-		#region Invariant
+        #region Invariant
 
-		/// <summary>
-		/// 不変契約を定義します。
-		/// </summary>
-		[ContractInvariantMethod]
+        /// <summary>
+        /// 不変契約を定義します。
+        /// </summary>
+        [ContractInvariantMethod]
 		private void ObjectInvariant()
 		{
 			Contract.Invariant(_Machines != null);
