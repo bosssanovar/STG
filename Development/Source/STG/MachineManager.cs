@@ -78,14 +78,20 @@ namespace STG
 		}
 #pragma warning restore CSE0003 // Use expression-bodied members
 
-		#endregion
+        /// <summary>
+        /// 機体一覧を取得します。
+        /// </summary>
+        /// <returns></returns>
+        public IList<MachineAbstract> GetMachines() => _Machines;
 
-		#region Invariant
+        #endregion
 
-		/// <summary>
-		/// 不変契約を定義します。
-		/// </summary>
-		[ContractInvariantMethod]
+        #region Invariant
+
+        /// <summary>
+        /// 不変契約を定義します。
+        /// </summary>
+        [ContractInvariantMethod]
 		private void ObjectInvariant()
 		{
 			Contract.Invariant(_Machines != null);
