@@ -152,7 +152,20 @@ namespace STG_Test
 
 			Assert.Pass();
 		}
-	}
+
+        [Test]
+        public void MachineManager_GetMachines()
+        {
+            var pos = new Position(10, 10);
+            var manager = MachineFactory.CreateMachines(pos);
+
+            var machines = manager.GetMachines();
+
+            Assert.That(machines.Count == 1);
+            Assert.That(machines[0].Position.Compare(pos) == Position.CompareResult.Same);
+        }
+
+    }
 
 	[TestFixture]
 	class MachineFactoryTest
