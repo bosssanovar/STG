@@ -162,7 +162,7 @@ namespace STG_Test
             var machines = manager.GetMachines();
 
             Assert.That(machines.Count == 1);
-            Assert.That(machines[0].Position.Compare(pos) == Position.CompareResult.Same);
+            Assert.That(machines[0].Position.Compare(pos) == Position.Direction.Same);
         }
 
     }

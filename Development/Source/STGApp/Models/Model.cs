@@ -94,7 +94,7 @@ namespace STGApp.Models
             }
             private set
             {
-                if (_OwnMachinePosition.Compare(value) == Position.CompareResult.Same) return;
+                if (_OwnMachinePosition.Compare(value) == Position.Direction.Same) return;
 
                 _OwnMachinePosition = value;
                 RaisePropertyChanged();
