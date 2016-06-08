@@ -88,6 +88,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\DisplayManager.cs" />
+    <Compile Include="Models\GameManager.cs" />
+    <Compile Include="Models\InputManager.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">

@@ -6,7 +6,7 @@
         xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
         xmlns:v="clr-namespace:STGApp.Views"
         xmlns:vm="clr-namespace:STGApp.ViewModels"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" ResizeMode="NoResize" SizeToContent="WidthAndHeight">
 
     <Window.DataContext>
         <vm:MainWindowViewModel/>
@@ -39,7 +39,7 @@
 
     </i:Interaction.Triggers>
 
-    <Canvas Background="MidnightBlue">
-        <Ellipse Fill="White" Height="22" Stroke="Black" Width="22" Canvas.Left="{Binding OwnMachinePositionX}" Canvas.Bottom="{Binding OwnMachinePositionY}"/>
+    <Canvas Background="MidnightBlue" Height="{Binding FieldHeight}" Width="{Binding FieldWidth}">
+        <Ellipse Fill="White" Height="22" Stroke="Black" Width="22" Canvas.Left="{Binding OwnMachinePositionX}" Canvas.Bottom="{Binding OwnMachinePositionY}" Margin="-11,0, 0,-11"/>
     </Canvas>
 </Window>

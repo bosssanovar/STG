@@ -54,20 +54,26 @@ namespace STGApp.ViewModels
 
 
         #region プロパティ
-
-        #region OwnMachinePositionXラッピングプロパティ
+        
         /// <summary>
         /// 自機位置のX座標を設定または取得します。
         /// </summary>
         public int OwnMachinePositionX => _Model.OwnMachinePosition.X;
-        #endregion
 
-        #region OwnMachinePositionYラッピングプロパティ
         /// <summary>
         /// 自機位置のY座標を設定または取得します。
         /// </summary>
         public int OwnMachinePositionY => _Model.OwnMachinePosition.Y;
-        #endregion
+
+        /// <summary>
+        /// フィールドの幅を取得します。
+        /// </summary>
+        public int FieldWidth => _Model.FieldSize.X;
+
+        /// <summary>
+        /// フィールドの高さを取得します。
+        /// </summary>
+        public int FieldHeight => _Model.FieldSize.Y;
 
         #endregion
 
