@@ -62,10 +62,10 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <RepeatButton Grid.Row="0" Grid.Column="1" Content="↑" Interval="50" Delay="0" Command="{Binding MoveToUpCommand}"/>
-                <RepeatButton Grid.Row="1" Grid.Column="2" Content="→" Interval="50" Delay="0" Command="{Binding MoveToRightCommand}"/>
-                <RepeatButton Grid.Row="2" Grid.Column="1" Content="↓" Interval="50" Delay="0" Command="{Binding MoveToDownCommand}"/>
-                <RepeatButton Grid.Row="1" Grid.Column="0" Content="←" Interval="50" Delay="0" Command="{Binding MoveToLeftCommand}"/>
+                <RepeatButton Grid.Row="0" Grid.Column="1" Content="↑" Interval="100" Delay="5" Command="{Binding MoveToUpCommand}"/>
+                <RepeatButton Grid.Row="1" Grid.Column="2" Content="→" Interval="100" Delay="5" Command="{Binding MoveToRightCommand}"/>
+                <RepeatButton Grid.Row="2" Grid.Column="1" Content="↓" Interval="100" Delay="5" Command="{Binding MoveToDownCommand}"/>
+                <RepeatButton Grid.Row="1" Grid.Column="0" Content="←" Interval="100" Delay="5" Command="{Binding MoveToLeftCommand}"/>
 
             </Grid>
             
