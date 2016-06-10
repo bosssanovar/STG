@@ -211,5 +211,47 @@ namespace STG_Test
                 }
             }
         }
+
+        [TestCase(10, 3)]
+        [TestCase(5, 30)]
+        [TestCase(5, 3)]
+        public void CoreTimerTest_パラメータ変更(int interval, int frames)
+        {
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            bool processing = true;
+
+            var timer = CoreTimer.GetInstance();
+            timer.MachineMoveTick += (sender, e) =>
+            {
+                sw.Stop();
+                Assert.That(sw.ElapsedMilliseconds >= interval * frames);
+                processing = false;
+            };
+            timer.SetInterval(interval);
+            timer.SetMachineMoveTickFrame(frames);
+            sw.Start();
+            timer.StartTimer();
+
+            while (processing)
+            {
+                if (sw.ElapsedMilliseconds > 3000)
+                {
+                    timer.StopTimer();
+                    sw.Stop();
+                    Assert.Fail();
+                    break;
+                }
+            }
+        }
+        
+        [Test]
+        public void CoreTimerTest_パラメータ変更時例外()
+        {
+            var timer = CoreTimer.GetInstance();
+            
+            Assert.Throws<ArgumentException>(() => { timer.SetMachineMoveTickFrame(0); });
+
+            Assert.Throws<ArgumentException>(() => { timer.SetInterval(0); });            
+        }
     }
 }
