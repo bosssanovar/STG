@@ -76,6 +76,11 @@ namespace STG
         /// </summary>
         public int MachineMoveTickFrame { get; private set; } = DefaultMachineMoveTickFrame;
 
+        /// <summary>
+        /// タイマーが動作中かを取得します。
+        /// </summary>
+        public bool IsTimerEnabled => _Timer.Enabled;
+
         #endregion
 
 
