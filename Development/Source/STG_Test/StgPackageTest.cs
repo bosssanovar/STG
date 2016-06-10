@@ -210,6 +210,7 @@ namespace STG_Test
                     break;
                 }
             }
+            timer.StopTimer();
         }
 
         [TestCase(10, 3)]
@@ -229,6 +230,8 @@ namespace STG_Test
             };
             timer.SetInterval(interval);
             timer.SetMachineMoveTickFrame(frames);
+            Assert.That(interval == timer.Interval);
+            Assert.That(frames == timer.MachineMoveTickFrame);
             sw.Start();
             timer.StartTimer();
 
@@ -242,6 +245,8 @@ namespace STG_Test
                     break;
                 }
             }
+
+            timer.StopTimer();
         }
         
         [Test]
@@ -251,7 +256,18 @@ namespace STG_Test
             
             Assert.Throws<ArgumentException>(() => { timer.SetMachineMoveTickFrame(0); });
 
-            Assert.Throws<ArgumentException>(() => { timer.SetInterval(0); });            
+            Assert.Throws<ArgumentException>(() => { timer.SetInterval(0); });
+        }
+
+        [Test]
+        public void CoreTimerTest_タイマーのStartとStop()
+        {
+            var timer = CoreTimer.GetInstance();
+            Assert.That(timer.IsTimerEnabled == false);
+            timer.StartTimer();
+            Assert.That(timer.IsTimerEnabled == true);
+            timer.StopTimer();
+            Assert.That(timer.IsTimerEnabled == false);
         }
     }
 }
