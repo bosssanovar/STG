@@ -54,7 +54,7 @@ namespace STG
         /// <summary>
         /// 単位フレームタイマー
         /// </summary>
-        private Timer _Timer;
+        private Timer _Timer = new Timer();
 
         /// <summary>
         /// 機体移動のための単位フレームカウンタ
@@ -155,7 +155,7 @@ namespace STG
         /// </summary>
         public void StartTimer()
         {
-            _Timer?.Start();
+            _Timer.Start();
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace STG
         /// </summary>
         public void StopTimer()
         {
-            _Timer?.Stop();
+            _Timer.Stop();
         }
 
         /// <summary>
@@ -174,11 +174,8 @@ namespace STG
         {
             Contract.Requires<ArgumentException>(interval > 0);
 
-            if (_Timer != null)
-            {
-                _Timer.Stop();
-                _Timer.Elapsed += new ElapsedEventHandler(_Timer_Tick);
-            }
+            _Timer.Stop();
+            _Timer.Elapsed += new ElapsedEventHandler(_Timer_Tick);
 
             _Timer = new Timer();
             _Timer.Interval = interval;
@@ -189,6 +186,20 @@ namespace STG
 
 
         #region 内部クラス
+        #endregion
+
+
+        #region Invariant
+
+        /// <summary>
+        /// 不変契約を定義します。
+        /// </summary>
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(_Timer != null);
+        }
+
         #endregion
     }
 }
