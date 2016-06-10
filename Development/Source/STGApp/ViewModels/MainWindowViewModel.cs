@@ -210,6 +210,7 @@ namespace STGApp.ViewModels
         /// </summary>
         public void Initialize()
         {
+            _Model.StartGame();
         }
 
         /// <summary>

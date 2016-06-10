@@ -66,7 +66,7 @@ namespace STGApp.Models
         /// <summary>
         /// <see cref="GameManager"/>インスタンス
         /// </summary>
-        private GameManager _GameManager = new GameManager();
+        private GameManager _GameManager = new GameManager(new Position(OwnMachineInitialPositionX, OwnMachineInitialPositionY));
 
         /// <summary>
         /// <see cref="DisplayManager"/>インスタンス
@@ -145,12 +145,12 @@ namespace STGApp.Models
         {
             _GameManager.SetFieldSize(new Position(FieldSizeX, FieldSizeY));
 
-            var machineManager = _GameManager.CreateMachineManager(new Position(OwnMachineInitialPositionX, OwnMachineInitialPositionY));
+            var machineManager = _GameManager.MachineManager;
 
             _DisplayManager = new DisplayManager(machineManager);
             _DisplayManager.MachinePositinChenged += _DisplayManager_MachinePositinChenged;
 
-            _InputManager = new InputManager(machineManager.GetOwnMachine());
+            _InputManager = new InputManager(_GameManager.InputManager);
         }
 
         /// <summary>
@@ -209,6 +209,14 @@ namespace STGApp.Models
                 _InputManager.MoveToUnder();
             }
             ));
+        }
+
+        /// <summary>
+        /// ゲームを開始します。
+        /// </summary>
+        internal void StartGame()
+        {
+            _GameManager.StartGame();
         }
 
         #endregion

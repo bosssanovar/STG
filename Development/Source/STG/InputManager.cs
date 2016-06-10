@@ -19,7 +19,7 @@ namespace STG
         /// </summary>
         /// <param name="timer"></param>
         /// <param name="ownMachine"></param>
-        internal InputManager(CoreTimer timer, OwnMachine ownMachine)
+        internal InputManager(CoreTimer timer, MachineAbstract ownMachine)
         {
             Contract.Requires<ArgumentNullException>(ownMachine != null);
             Contract.Requires<ArgumentNullException>(timer != null);
@@ -67,7 +67,7 @@ namespace STG
         /// <summary>
         /// 自機インスタンス
         /// </summary>
-        private OwnMachine _OwnMachine;
+        private MachineAbstract _OwnMachine;
 
         #endregion
 

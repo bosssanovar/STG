@@ -26,7 +26,7 @@ namespace STG.MachinePosition
         /// <summary>
         /// フレーム数
         /// </summary>
-        internal const int Frames = 5;
+        internal const int Frames = 3;
 
         #endregion
 

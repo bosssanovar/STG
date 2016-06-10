@@ -13,39 +13,43 @@ namespace STGApp.Models
     /// </summary>
     internal class GameManager
     {
-        #region コンストラクタ/デストラクタ
-        #endregion
+        #region コンストラクタ
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="ownMachinePosition"></param>
+        public GameManager(Position ownMachinePosition)
+        {
+            _Factory = new MachineFactory(ownMachinePosition);
 
-        #region 定数
-        #endregion
+            _Timer = new CoreTimerControler();
+        }
 
-
-        #region enum
         #endregion
 
 
         #region フィールド
+
+        MachineFactory _Factory;
+
+        CoreTimerControler _Timer;
+
         #endregion
 
 
         #region プロパティ
-        #endregion
 
+        /// <summary>
+        /// <see cref="MachineManager"/>インスタンスを取得します。
+        /// </summary>
+        public MachineManager MachineManager => _Factory.Machines;
 
-        #region コマンド
-        #endregion
+        /// <summary>
+        /// <see cref="STG.InputManager"/>インスタンスを取得します。
+        /// </summary>
+        public STG.InputManager InputManager => _Factory.Input;
 
-
-        #region デリゲート
-        #endregion
-
-
-        #region イベント
-        #endregion
-
-
-        #region イベントハンドラ
         #endregion
 
 
@@ -61,15 +65,13 @@ namespace STGApp.Models
         }
 
         /// <summary>
-        /// <see cref="MachineManager"/>インスタンスを取得します。
+        /// ゲームを開始します。
         /// </summary>
-        /// <param name="ownMachinePosition"></param>
-        /// <returns></returns>
-        public MachineManager CreateMachineManager(Position ownMachinePosition) => MachineFactory.CreateMachines(ownMachinePosition);
+        internal void StartGame()
+        {
+            _Timer.StartTimer();
+        }
 
-        #endregion
-
-        #region 内部クラス
         #endregion
     }
 }

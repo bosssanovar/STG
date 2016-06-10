@@ -9,41 +9,61 @@ using System.Threading.Tasks;
 
 namespace STG
 {
-	/// <summary>
-	/// 機体を生成するファクトリクラス
-	/// </summary>
-	public static class MachineFactory
-	{
-		#region メソッド
+    /// <summary>
+    /// 機体を生成するファクトリクラス
+    /// </summary>
+    public class MachineFactory
+    {
+        #region コンストラクタ
 
-		/// <summary>
-		/// 必要な機体を保持した機体管理インスタンスを生成します。
-		/// </summary>
-		/// <returns></returns>
-		public static MachineManager CreateMachines(Position position)
-		{
-			Contract.Ensures(Contract.Result<MachineManager>() != null);
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>]
+        /// <param name="position"></param>
+        public MachineFactory(Position position)
+        {
+            Machines = new MachineManager(CreateMachineList(position));
 
-			return new MachineManager(CreateMachineList(position));
-		}
+            Input = new InputManager(CoreTimer.GetInstance(), Machines.GetOwnMachine());
+        }
 
-		/// <summary>
-		/// 機体リストを生成します。
-		/// </summary>
-		/// <param name="position"></param>
-		/// <returns></returns>
-		private static List<MachineAbstract> CreateMachineList(Position position)
-		{
-			Contract.Ensures(Contract.Result<List<MachineAbstract>>() != null);
+        #endregion
 
-			var ret = new List<MachineAbstract>()
-				{
-					new OwnMachine(MachinePositionFactory.CreateMachinePositionInstance(position))
-				};
 
-			return ret.Where(e => e != null).ToList();
-		}
+        #region プロパティ
 
-		#endregion
-	}
+        /// <summary>
+        /// <see cref="MachineManager"/>インスタンスを取得します。
+        /// </summary>
+        public MachineManager Machines { get; }
+
+        /// <summary>
+        /// <see cref="InputManager"/>インスタンスを取得します。
+        /// </summary>
+        public InputManager Input { get; }
+
+        #endregion
+
+
+        #region メソッド
+
+        /// <summary>
+        /// 機体リストを生成します。
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        private List<MachineAbstract> CreateMachineList(Position position)
+        {
+            Contract.Ensures(Contract.Result<List<MachineAbstract>>() != null);
+
+            var ret = new List<MachineAbstract>()
+                {
+                    new OwnMachine(MachinePositionFactory.CreateMachinePositionInstance(position))
+                };
+
+            return ret.Where(e => e != null).ToList();
+        }
+
+        #endregion
+    }
 }

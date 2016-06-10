@@ -14,10 +14,10 @@ namespace STGApp.Models
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="ownMachine"></param>
-        public InputManager(MachineAbstract ownMachine)
+        /// <param name="manager"></param>
+        public InputManager(STG.InputManager manager)
         {
-            _OwnMachine = ownMachine;
+            _InputManager = manager;
         }
 
         #endregion
@@ -34,9 +34,9 @@ namespace STGApp.Models
         #region フィールド
 
         /// <summary>
-        /// 自機インスタンス
+        /// 入力管理用の<see cref="STG.InputManager"/>インスタンス
         /// </summary>
-        private MachineAbstract _OwnMachine;
+        private STG.InputManager _InputManager;
 
         #endregion
 
@@ -68,7 +68,7 @@ namespace STGApp.Models
         /// </summary>
         public void MoveToLeft()
         {
-            _OwnMachine.MoveToLeft();
+            _InputManager.AddOrder(STG.InputManager.Order.MoveLeft);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace STGApp.Models
         /// </summary>
         public void MoveToRight()
         {
-            _OwnMachine.MoveToRight();
+            _InputManager.AddOrder(STG.InputManager.Order.MoveRight);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace STGApp.Models
         /// </summary>
         public void MoveToUpper()
         {
-            _OwnMachine.MoveToUpper();
+            _InputManager.AddOrder(STG.InputManager.Order.MoveUp);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace STGApp.Models
         /// </summary>
         public void MoveToUnder()
         {
-            _OwnMachine.MoveToUnder();
+            _InputManager.AddOrder(STG.InputManager.Order.MoveDown);
         }
 
 

@@ -166,9 +166,9 @@ namespace STG_Test
         public void MachineManager_GetMachines()
         {
             var pos = new Position(10, 10);
-            var manager = MachineFactory.CreateMachines(pos);
+            var manager = new MachineFactory(pos);
 
-            var machines = manager.GetMachines();
+            var machines = manager.Machines.GetMachines();
 
             Assert.That(machines.Count == 1);
             Assert.That(machines[0].Position.Compare(pos) == Position.Direction.Same);
@@ -182,7 +182,8 @@ namespace STG_Test
         [Test]
         public void MachineFactory_CreateMachines()
         {
-            var manager = MachineFactory.CreateMachines(new Position(50, 30));
+            var factory = new MachineFactory(new Position(50, 30));
+            var manager = factory.Machines;
 
             Assert.That(manager is MachineManager);
             Assert.That(manager.GetOwnMachine().Position.X == 50);

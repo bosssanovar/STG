@@ -30,12 +30,12 @@ namespace STG
         /// <summary>
         /// <see cref="Interval"/>プロパティの初期値[ms]
         /// </summary>
-        public const int DefaultInterval = 10;
+        public const int DefaultInterval = 1;
 
         /// <summary>
         /// <see cref="MachineMoveTickFrame"/>プロパティ初期値
         /// </summary>
-        public const int DefaultMachineMoveTickFrame = 30;
+        public const int DefaultMachineMoveTickFrame = 3;
 
         #endregion
 
