@@ -180,4 +180,36 @@ namespace STG_Test
             Assert.That(manager.GetOwnMachine().Position.Y == 30);
         }
     }
+
+    [TestFixture]
+    class CoreTimerTest
+    {
+        [TestCase]
+        public void CoreTimerTest_MachineMoveTick()
+        {
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            bool processing = true;
+
+            var timer = CoreTimer.GetInstance();
+            timer.MachineMoveTick += (sender, e) =>
+                {
+                    sw.Stop();
+                    Assert.That(sw.ElapsedMilliseconds >= CoreTimer.DefaultInterval * CoreTimer.DefaultMachineMoveTickFrame);
+                    processing = false;
+                };
+            sw.Start();
+            timer.StartTimer();
+
+            while (processing)
+            {
+                if (sw.ElapsedMilliseconds > 3000)
+                {
+                    timer.StopTimer();
+                    sw.Stop();
+                    Assert.Fail();
+                    break;
+                }
+            }
+        }
+    }
 }

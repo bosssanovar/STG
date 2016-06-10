@@ -189,6 +189,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CoreTimer.cs" />
     <Compile Include="MachineAbstract.cs" />
     <Compile Include="MachineFactory.cs" />
     <Compile Include="MachineManager.cs" />
