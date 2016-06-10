@@ -191,6 +191,8 @@ namespace STG_Test
             bool processing = true;
 
             var timer = CoreTimer.GetInstance();
+            timer.SetInterval(CoreTimer.DefaultInterval);
+            timer.SetMachineMoveTickFrame(CoreTimer.DefaultMachineMoveTickFrame);
             timer.MachineMoveTick += (sender, e) =>
                 {
                     sw.Stop();
@@ -268,6 +270,67 @@ namespace STG_Test
             Assert.That(timer.IsTimerEnabled == true);
             timer.StopTimer();
             Assert.That(timer.IsTimerEnabled == false);
+        }
+    }
+
+    [TestFixture]
+    class CoreTimerControlerTest
+    {
+        [Test]
+        public void CoreTimerControlerTest_タイマーのStartとStop()
+        {
+            var timer = new CoreTimerControler();
+            Assert.That(timer.IsTimerEnabled == false);
+            timer.StartTimer();
+            Assert.That(timer.IsTimerEnabled == true);
+            timer.StopTimer();
+            Assert.That(timer.IsTimerEnabled == false);
+        }
+
+        [TestCase(10, 3)]
+        [TestCase(5, 30)]
+        [TestCase(5, 3)]
+        public void CoreTimerControlerTest_パラメータ変更(int interval, int frames)
+        {
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            bool processing = true;
+
+            var timer = new CoreTimerControler();
+            timer.Timer.MachineMoveTick += (sender, e) =>
+            {
+                sw.Stop();
+                Assert.That(sw.ElapsedMilliseconds >= interval * frames);
+                processing = false;
+            };
+            timer.SetInterval(interval);
+            timer.SetMachineMoveTickFrame(frames);
+            Assert.That(interval == timer.Timer.Interval);
+            Assert.That(frames == timer.Timer.MachineMoveTickFrame);
+            sw.Start();
+            timer.StartTimer();
+
+            while (processing)
+            {
+                if (sw.ElapsedMilliseconds > 3000)
+                {
+                    timer.StopTimer();
+                    sw.Stop();
+                    Assert.Fail();
+                    break;
+                }
+            }
+
+            timer.StopTimer();
+        }
+
+        [Test]
+        public void CoreTimerControlerTest_パラメータ変更時例外()
+        {
+            var timer = new CoreTimerControler();
+
+            Assert.Throws<ArgumentException>(() => { timer.SetMachineMoveTickFrame(0); });
+
+            Assert.Throws<ArgumentException>(() => { timer.SetInterval(0); });
         }
     }
 }

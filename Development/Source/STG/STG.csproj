@@ -190,6 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoreTimer.cs" />
+    <Compile Include="CoreTimerControler.cs" />
     <Compile Include="MachineAbstract.cs" />
     <Compile Include="MachineFactory.cs" />
     <Compile Include="MachineManager.cs" />
