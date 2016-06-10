@@ -90,37 +90,42 @@ namespace STG_Test
             Assert.DoesNotThrow(() => new MachineManager(new List<MachineAbstract>() { new OwnMachine(MachinePositionFactory.CreateMachinePositionInstance(new Position(50, 30))) }));
         }
 
-        [TestCase(Position.Direction.Right, 50, 50, 50 + FieldSize.DefaultUnitMovement, 50)]
-        [TestCase(Position.Direction.Left, 50, 50, 50 - FieldSize.DefaultUnitMovement, 50)]
-        [TestCase(Position.Direction.Upper, 50, 50, 50, 50 + FieldSize.DefaultUnitMovement)]
-        [TestCase(Position.Direction.Under, 50, 50, 50, 50 - FieldSize.DefaultUnitMovement)]
-        public void MachineManager_移動(Position.Direction direction, int initX, int initY, int resultX, int resultY)
+        [TestCase(Position.Direction.Right, 50, 50, FieldSize.DefaultUnitMovement, 0)]
+        [TestCase(Position.Direction.Left, 50, 50, -FieldSize.DefaultUnitMovement, 0)]
+        [TestCase(Position.Direction.Upper, 50, 50, 0, FieldSize.DefaultUnitMovement)]
+        [TestCase(Position.Direction.Under, 50, 50, 0, -FieldSize.DefaultUnitMovement)]
+        public void MachineManager_移動(Position.Direction direction, int initX, int initY, int offsetX, int offsetY)
         {
             var own = new OwnMachine(MachinePositionFactory.CreateMachinePositionInstance(new Position(initX, initY)));
             var manager = new MachineManager(new List<MachineAbstract>() { own });
+            int count = 0;
             manager.MachinePositionChanged += (sender, e) =>
             {
+                count++;
                 Assert.That(sender.Equals(own));
-                Assert.That(e.Position.X == resultX);
-                Assert.That(e.Position.Y == resultY);
+                Assert.That(e.Position.X == 50 + offsetX * count);
+                Assert.That(e.Position.Y == 50 + offsetY * count);
             };
 
-            switch (direction)
+            for (int cnt = 0; cnt < 100; cnt++)
             {
-                case Position.Direction.Right:
-                    manager.GetOwnMachine().MoveToRight();
-                    break;
-                case Position.Direction.Upper:
-                    manager.GetOwnMachine().MoveToUpper();
-                    break;
-                case Position.Direction.Left:
-                    manager.GetOwnMachine().MoveToLeft();
-                    break;
-                case Position.Direction.Under:
-                    manager.GetOwnMachine().MoveToUnder();
-                    break;
-                default:
-                    break;
+                switch (direction)
+                {
+                    case Position.Direction.Right:
+                        manager.GetOwnMachine().MoveToRight();
+                        break;
+                    case Position.Direction.Upper:
+                        manager.GetOwnMachine().MoveToUpper();
+                        break;
+                    case Position.Direction.Left:
+                        manager.GetOwnMachine().MoveToLeft();
+                        break;
+                    case Position.Direction.Under:
+                        manager.GetOwnMachine().MoveToUnder();
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
@@ -132,23 +137,26 @@ namespace STG_Test
         {
             var own = new OwnMachine(MachinePositionFactory.CreateMachinePositionInstance(new Position(initX, initY)));
             var manager = new MachineManager(new List<MachineAbstract>() { own });
-
-            switch (direction)
+            
+            for (int cnt = 0; cnt < 100; cnt++)
             {
-                case Position.Direction.Right:
-                    manager.GetOwnMachine().MoveToRight();
-                    break;
-                case Position.Direction.Upper:
-                    manager.GetOwnMachine().MoveToUpper();
-                    break;
-                case Position.Direction.Left:
-                    manager.GetOwnMachine().MoveToLeft();
-                    break;
-                case Position.Direction.Under:
-                    manager.GetOwnMachine().MoveToUnder();
-                    break;
-                default:
-                    break;
+                switch (direction)
+                {
+                    case Position.Direction.Right:
+                        manager.GetOwnMachine().MoveToRight();
+                        break;
+                    case Position.Direction.Upper:
+                        manager.GetOwnMachine().MoveToUpper();
+                        break;
+                    case Position.Direction.Left:
+                        manager.GetOwnMachine().MoveToLeft();
+                        break;
+                    case Position.Direction.Under:
+                        manager.GetOwnMachine().MoveToUnder();
+                        break;
+                    default:
+                        break;
+                }
             }
 
             Assert.Pass();
@@ -380,7 +388,6 @@ namespace STG_Test
         [TestCase(InputManager.Order.MoveLeft, 50 - FieldSize.DefaultUnitMovement, 50)]
         [TestCase(InputManager.Order.MoveRight, 50 + FieldSize.DefaultUnitMovement, 50)]
         [TestCase(InputManager.Order.MoveUp, 50, 50 + FieldSize.DefaultUnitMovement)]
-        [TestCase(InputManager.Order.None, 50, 50)]
         public void InputManagerTest_AddRemoveOrderTimer(InputManager.Order order, int resultX, int resultY)
         {
             FieldSizeFactory.GetFieldSizeInstance().SetUnitMovement(FieldSize.DefaultUnitMovement);
@@ -400,6 +407,33 @@ namespace STG_Test
                     isSuccess = true;
                 };
             while (!isSuccess) { }
+
+            manager.RemoveOrder(order);
+            timer.StartTimer();
+            System.Threading.Thread.Sleep(1000);
+            timer.StopTimer();
+            Assert.That(own.Position.X == resultX);
+            Assert.That(own.Position.Y == resultY);
+        }
+
+
+        [TestCase(InputManager.Order.None, 50, 50)]
+        public void InputManagerTest_AddRemoveOrderTimer_OrderNone(InputManager.Order order, int resultX, int resultY)
+        {
+            FieldSizeFactory.GetFieldSizeInstance().SetUnitMovement(FieldSize.DefaultUnitMovement);
+
+            var own = new OwnMachine(new NormalMachinePosition(new Position(50, 50)));
+            var timer = CoreTimer.GetInstance();
+            var manager = new InputManager(timer, own);
+
+            manager.AddOrder(order);
+            timer.StartTimer();
+            own.MachinePositionChanged += (sender, e) =>
+            {
+                timer.StopTimer();
+                Assert.Fail();
+            };
+            System.Threading.Thread.Sleep(1000);
 
             manager.RemoveOrder(order);
             timer.StartTimer();

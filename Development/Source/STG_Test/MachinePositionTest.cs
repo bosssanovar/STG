@@ -133,7 +133,10 @@ namespace STG_Test
             FieldSizeFactory.GetFieldSizeInstance().SetFieldSize(new Position(0, 0), new Position(100, 100));
 
             var limit = new AreaEndLimit(new NormalMachinePosition(new Position(50, 50)));
-            limit.MoveToLeft();
+            for (int cnt = 0; cnt < NormalMachinePosition.Frames; cnt++)
+            {
+                limit.MoveToLeft();
+            }
 
             Assert.Pass();
         }
