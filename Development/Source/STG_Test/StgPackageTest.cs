@@ -7,6 +7,7 @@ using NUnit.Framework;
 using STG;
 using STG.MachinePosition;
 using STG.Parameters;
+using System.Reflection;
 
 namespace STG_Test
 {
@@ -250,12 +251,12 @@ namespace STG_Test
 
             timer.StopTimer();
         }
-        
+
         [Test]
         public void CoreTimerTest_パラメータ変更時例外()
         {
             var timer = CoreTimer.GetInstance();
-            
+
             Assert.Throws<ArgumentException>(() => { timer.SetMachineMoveTickFrame(0); });
 
             Assert.Throws<ArgumentException>(() => { timer.SetInterval(0); });
@@ -332,5 +333,65 @@ namespace STG_Test
 
             Assert.Throws<ArgumentException>(() => { timer.SetInterval(0); });
         }
+    }
+
+    [TestFixture]
+    class InputManagerTest
+    {
+        [Test]
+        public void InputManagerTest_初期化()
+        {
+            Assert.Throws<ArgumentNullException>(() => new InputManager(null, null));
+            Assert.Throws<ArgumentNullException>(() => new InputManager(null, new OwnMachine(new NormalMachinePosition(new Position(10, 10)))));
+            Assert.Throws<ArgumentNullException>(() => new InputManager(CoreTimer.GetInstance(), null));
+            Assert.DoesNotThrow(() => new InputManager(CoreTimer.GetInstance(), new OwnMachine(new NormalMachinePosition(new Position(10, 10)))));
+        }
+
+        [TestCase(InputManager.Order.MoveDown, 50, 50 - FieldSize.DefaultUnitMovement)]
+        [TestCase(InputManager.Order.MoveLeft, 50 - FieldSize.DefaultUnitMovement, 50)]
+        [TestCase(InputManager.Order.MoveRight, 50 + FieldSize.DefaultUnitMovement, 50)]
+        [TestCase(InputManager.Order.MoveUp, 50, 50 + FieldSize.DefaultUnitMovement)]
+        [TestCase(InputManager.Order.None, 50, 50)]
+        public void InputManagerTest_AddRemoveOrder(InputManager.Order order, int resultX, int resultY)
+        {
+            FieldSizeFactory.GetFieldSizeInstance().SetUnitMovement(FieldSize.DefaultUnitMovement);
+
+            var own = new OwnMachine(new NormalMachinePosition(new Position(50, 50)));
+            var manager = new InputManager(CoreTimer.GetInstance(), own);
+
+            manager.AddOrder(order);
+            manager.GetType().InvokeMember("RequestOwnMachineMove", BindingFlags.InvokeMethod | BindingFlags.NonPublic | BindingFlags.Instance, null, manager, null);
+            Assert.That(own.Position.X == resultX);
+            Assert.That(own.Position.Y == resultY);
+
+            manager.RemoveOrder(order);
+            manager.GetType().InvokeMember("RequestOwnMachineMove", BindingFlags.InvokeMethod | BindingFlags.NonPublic | BindingFlags.Instance, null, manager, null);
+            Assert.That(own.Position.X == resultX);
+            Assert.That(own.Position.Y == resultY);
+        }
+
+    //    [TestCase(InputManager.Order.MoveDown, 50, 50 - FieldSize.DefaultUnitMovement)]
+    //    [TestCase(InputManager.Order.MoveLeft, 50 - FieldSize.DefaultUnitMovement, 50)]
+    //    [TestCase(InputManager.Order.MoveRight, 50 + FieldSize.DefaultUnitMovement, 50)]
+    //    [TestCase(InputManager.Order.MoveUp, 50, 50 + FieldSize.DefaultUnitMovement)]
+    //    [TestCase(InputManager.Order.None, 50, 50)]
+    //    public void InputManagerTest_AddRemoveOrderTimer(InputManager.Order order, int resultX, int resultY)
+    //    {
+    //        FieldSizeFactory.GetFieldSizeInstance().SetUnitMovement(FieldSize.DefaultUnitMovement);
+
+    //        var own = new OwnMachine(new NormalMachinePosition(new Position(50, 50)));
+    //        var timer = CoreTimer.GetInstance();
+    //        var manager = new InputManager(timer, own);
+
+    //        manager.AddOrder(order);
+    //        timer.StartTimer();
+    //        Assert.That(own.Position.X == resultX);
+    //        Assert.That(own.Position.Y == resultY);
+
+    //        manager.RemoveOrder(order);
+    //        timer.StartTimer();
+    //        Assert.That(own.Position.X == resultX);
+    //        Assert.That(own.Position.Y == resultY);
+    //    }
     }
 }
