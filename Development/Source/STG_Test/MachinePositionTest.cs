@@ -29,34 +29,21 @@ namespace STG_Test
         private Stopwatch _Sw = new Stopwatch();
 
         [Test]
-        public void NormalMachinePosition_ラグ測定()
-        {
-            var machinePosition = new NormalMachinePosition(new Position(10, 10));
-            machinePosition.MachinePositionChanged += MachinePosition_MachinePositionChanged;
-            _Sw.Start();
-            machinePosition.MoveToLeft();
-            _Sw.Reset();
-        }
-
-        private void MachinePosition_MachinePositionChanged(object sender, MachinePositionChangedEventArgs e)
-        {
-            _Sw.Stop();
-            Assert.That(_Sw.ElapsedMilliseconds >= NormalMachinePosition.IntervalTime);
-        }
-
-        [Test]
         public void NormalMachinePosition_MoveToLeft()
         {
             var machinePosition = new NormalMachinePosition(new Position(10, 10));
-
-            machinePosition.MachinePositionChanged += MachinePosition_MachinePositionChangedMoveLeft;
-            machinePosition.MoveToLeft();
-        }
-
-        private void MachinePosition_MachinePositionChangedMoveLeft(object sender, MachinePositionChangedEventArgs e)
-        {
-            Assert.That(e.Position.X == 10 - FieldSize.DefaultUnitMovement);
-            Assert.That(e.Position.Y == 10);
+            bool isSuccess = false;
+            machinePosition.MachinePositionChanged += (sender, e) =>
+            {
+                Assert.That(e.Position.X == 10 - FieldSize.DefaultUnitMovement);
+                Assert.That(e.Position.Y == 10);
+                isSuccess = true;
+            };
+            for (int cnt = 0; cnt < NormalMachinePosition.Frames; cnt++)
+            {
+                machinePosition.MoveToLeft();
+            }
+            Assert.That(isSuccess);
         }
 
         [Test]
@@ -64,7 +51,10 @@ namespace STG_Test
         {
             var machinePosition = new NormalMachinePosition(new Position(10, 10));
 
-            machinePosition.MoveToLeft();
+            for (int cnt = 0; cnt < NormalMachinePosition.Frames; cnt++)
+            {
+                machinePosition.MoveToLeft();
+            }
 
             Assert.Pass();
         }
@@ -73,43 +63,54 @@ namespace STG_Test
         public void NormalMachinePosition_MoveToRight()
         {
             var machinePosition = new NormalMachinePosition(new Position(10, 10));
-
-            machinePosition.MachinePositionChanged += MachinePosition_MachinePositionChangedMoveRight;
-            machinePosition.MoveToRight();
+            bool isSuccess = false;
+            machinePosition.MachinePositionChanged += (sender, e) =>
+            {
+                Assert.That(e.Position.X == 10 + FieldSize.DefaultUnitMovement);
+                Assert.That(e.Position.Y == 10);
+                isSuccess = true;
+            };
+            for (int cnt = 0; cnt < NormalMachinePosition.Frames; cnt++)
+            {
+                machinePosition.MoveToRight();
+            }
+            Assert.That(isSuccess);
         }
 
-        private void MachinePosition_MachinePositionChangedMoveRight(object sender, MachinePositionChangedEventArgs e)
-        {
-            Assert.That(e.Position.X == 10 + FieldSize.DefaultUnitMovement);
-            Assert.That(e.Position.Y == 10);
-        }
         [Test]
         public void NormalMachinePosition_MoveToUnder()
         {
             var machinePosition = new NormalMachinePosition(new Position(10, 10));
-
-            machinePosition.MachinePositionChanged += MachinePosition_MachinePositionChangedMoveUnder;
-            machinePosition.MoveToUnder();
+            bool isSuccess = false;
+            machinePosition.MachinePositionChanged += (sender, e) =>
+            {
+                Assert.That(e.Position.X == 10);
+                Assert.That(e.Position.Y == 10 - FieldSize.DefaultUnitMovement);
+                isSuccess = true;
+            };
+            for (int cnt = 0; cnt < NormalMachinePosition.Frames; cnt++)
+            {
+                machinePosition.MoveToUnder();
+            }
+            Assert.That(isSuccess);
         }
 
-        private void MachinePosition_MachinePositionChangedMoveUnder(object sender, MachinePositionChangedEventArgs e)
-        {
-            Assert.That(e.Position.X == 10);
-            Assert.That(e.Position.Y == 10 - FieldSize.DefaultUnitMovement);
-        }
         [Test]
         public void NormalMachinePosition_MoveToUpper()
         {
             var machinePosition = new NormalMachinePosition(new Position(10, 10));
-
-            machinePosition.MachinePositionChanged += MachinePosition_MachinePositionChangedMoveUpper;
-            machinePosition.MoveToUpper();
-        }
-
-        private void MachinePosition_MachinePositionChangedMoveUpper(object sender, MachinePositionChangedEventArgs e)
-        {
-            Assert.That(e.Position.X == 10);
-            Assert.That(e.Position.Y == 10 + FieldSize.DefaultUnitMovement);
+            bool isSuccess = false;
+            machinePosition.MachinePositionChanged += (sender, e) =>
+            {
+                Assert.That(e.Position.X == 10);
+                Assert.That(e.Position.Y == 10 + FieldSize.DefaultUnitMovement);
+                isSuccess = true;
+            };
+            for (int cnt = 0; cnt < NormalMachinePosition.Frames; cnt++)
+            {
+                machinePosition.MoveToUpper();
+            }
+            Assert.That(isSuccess);
         }
     }
 
@@ -154,7 +155,10 @@ namespace STG_Test
             _Result = new Position(x - FieldSize.DefaultUnitMovement, y);
             _IsPositionChanged = false;
             limit.MachinePositionChanged += Limit_MachinePositionChanged_MoveLeft;
-            limit.MoveToLeft();
+            for (int cnt = 0; cnt < NormalMachinePosition.Frames; cnt++)
+            {
+                limit.MoveToLeft();
+            }
             limit.MachinePositionChanged -= Limit_MachinePositionChanged_MoveLeft;
             Assert.That(isPositionChanged == _IsPositionChanged);
         }
@@ -184,7 +188,10 @@ namespace STG_Test
             _Result = new Position(x + FieldSize.DefaultUnitMovement, y);
             _IsPositionChanged = false;
             limit.MachinePositionChanged += Limit_MachinePositionChanged_MoveLeft;
-            limit.MoveToRight();
+            for (int cnt = 0; cnt < NormalMachinePosition.Frames; cnt++)
+            {
+                limit.MoveToRight();
+            }
             limit.MachinePositionChanged -= Limit_MachinePositionChanged_MoveLeft;
             Assert.That(isPositionChanged == _IsPositionChanged);
         }
@@ -214,7 +221,10 @@ namespace STG_Test
             _Result = new Position(x, y + FieldSize.DefaultUnitMovement);
             _IsPositionChanged = false;
             limit.MachinePositionChanged += Limit_MachinePositionChanged_MoveLeft;
-            limit.MoveToUpper();
+            for (int cnt = 0; cnt < NormalMachinePosition.Frames; cnt++)
+            {
+                limit.MoveToUpper();
+            }
             limit.MachinePositionChanged -= Limit_MachinePositionChanged_MoveLeft;
             Assert.That(isPositionChanged == _IsPositionChanged);
         }
@@ -244,7 +254,10 @@ namespace STG_Test
             _Result = new Position(x, y - FieldSize.DefaultUnitMovement);
             _IsPositionChanged = false;
             limit.MachinePositionChanged += Limit_MachinePositionChanged_MoveLeft;
-            limit.MoveToUnder();
+            for (int cnt = 0; cnt < NormalMachinePosition.Frames; cnt++)
+            {
+                limit.MoveToUnder();
+            }
             limit.MachinePositionChanged -= Limit_MachinePositionChanged_MoveLeft;
             Assert.That(isPositionChanged == _IsPositionChanged);
         }

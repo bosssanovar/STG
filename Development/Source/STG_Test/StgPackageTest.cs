@@ -360,38 +360,53 @@ namespace STG_Test
             var manager = new InputManager(CoreTimer.GetInstance(), own);
 
             manager.AddOrder(order);
-            manager.GetType().InvokeMember("RequestOwnMachineMove", BindingFlags.InvokeMethod | BindingFlags.NonPublic | BindingFlags.Instance, null, manager, null);
+            for (int cnt = 0; cnt < NormalMachinePosition.Frames; cnt++)
+            {
+                manager.GetType().InvokeMember("RequestOwnMachineMove", BindingFlags.InvokeMethod | BindingFlags.NonPublic | BindingFlags.Instance, null, manager, null);
+            }
             Assert.That(own.Position.X == resultX);
             Assert.That(own.Position.Y == resultY);
 
             manager.RemoveOrder(order);
-            manager.GetType().InvokeMember("RequestOwnMachineMove", BindingFlags.InvokeMethod | BindingFlags.NonPublic | BindingFlags.Instance, null, manager, null);
+            for (int cnt = 0; cnt < NormalMachinePosition.Frames; cnt++)
+            {
+                manager.GetType().InvokeMember("RequestOwnMachineMove", BindingFlags.InvokeMethod | BindingFlags.NonPublic | BindingFlags.Instance, null, manager, null);
+            }
             Assert.That(own.Position.X == resultX);
             Assert.That(own.Position.Y == resultY);
         }
 
-    //    [TestCase(InputManager.Order.MoveDown, 50, 50 - FieldSize.DefaultUnitMovement)]
-    //    [TestCase(InputManager.Order.MoveLeft, 50 - FieldSize.DefaultUnitMovement, 50)]
-    //    [TestCase(InputManager.Order.MoveRight, 50 + FieldSize.DefaultUnitMovement, 50)]
-    //    [TestCase(InputManager.Order.MoveUp, 50, 50 + FieldSize.DefaultUnitMovement)]
-    //    [TestCase(InputManager.Order.None, 50, 50)]
-    //    public void InputManagerTest_AddRemoveOrderTimer(InputManager.Order order, int resultX, int resultY)
-    //    {
-    //        FieldSizeFactory.GetFieldSizeInstance().SetUnitMovement(FieldSize.DefaultUnitMovement);
+        [TestCase(InputManager.Order.MoveDown, 50, 50 - FieldSize.DefaultUnitMovement)]
+        [TestCase(InputManager.Order.MoveLeft, 50 - FieldSize.DefaultUnitMovement, 50)]
+        [TestCase(InputManager.Order.MoveRight, 50 + FieldSize.DefaultUnitMovement, 50)]
+        [TestCase(InputManager.Order.MoveUp, 50, 50 + FieldSize.DefaultUnitMovement)]
+        [TestCase(InputManager.Order.None, 50, 50)]
+        public void InputManagerTest_AddRemoveOrderTimer(InputManager.Order order, int resultX, int resultY)
+        {
+            FieldSizeFactory.GetFieldSizeInstance().SetUnitMovement(FieldSize.DefaultUnitMovement);
 
-    //        var own = new OwnMachine(new NormalMachinePosition(new Position(50, 50)));
-    //        var timer = CoreTimer.GetInstance();
-    //        var manager = new InputManager(timer, own);
+            var own = new OwnMachine(new NormalMachinePosition(new Position(50, 50)));
+            var timer = CoreTimer.GetInstance();
+            var manager = new InputManager(timer, own);
 
-    //        manager.AddOrder(order);
-    //        timer.StartTimer();
-    //        Assert.That(own.Position.X == resultX);
-    //        Assert.That(own.Position.Y == resultY);
+            manager.AddOrder(order);
+            timer.StartTimer();
+            bool isSuccess = false;
+            own.MachinePositionChanged += (sender, e) =>
+                {
+                    timer.StopTimer();
+                    Assert.That(own.Position.X == resultX);
+                    Assert.That(own.Position.Y == resultY);
+                    isSuccess = true;
+                };
+            while (!isSuccess) { }
 
-    //        manager.RemoveOrder(order);
-    //        timer.StartTimer();
-    //        Assert.That(own.Position.X == resultX);
-    //        Assert.That(own.Position.Y == resultY);
-    //    }
+            manager.RemoveOrder(order);
+            timer.StartTimer();
+            System.Threading.Thread.Sleep(1000);
+            timer.StopTimer();
+            Assert.That(own.Position.X == resultX);
+            Assert.That(own.Position.Y == resultY);
+        }
     }
 }

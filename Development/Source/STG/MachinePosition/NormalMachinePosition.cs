@@ -4,7 +4,7 @@ using STG.Parameters;
 namespace STG.MachinePosition
 {
     /// <summary>
-    /// 移動タイムラグが<see cref="IntervalTime"/>ミリ秒、全方位正常動作する機体位置クラス
+    /// <see cref="Frames"/>フレーム後に、全方位正常動作する機体位置クラス
     /// </summary>
     internal class NormalMachinePosition : MachinePositionAbstract
     {
@@ -24,9 +24,9 @@ namespace STG.MachinePosition
         #region 定数
 
         /// <summary>
-        /// 移動タイムラグ時間(ミリ秒)
+        /// フレーム数
         /// </summary>
-        internal const int IntervalTime = 100;
+        internal const int Frames = 5;
 
         #endregion
 
@@ -34,9 +34,9 @@ namespace STG.MachinePosition
         #region プロパティ
 
         /// <summary>
-        /// 移動指示から移動が完了するまでのラグ(ミリ秒)を設定または取得します。
+        /// 移動を行うまでのフレーム数を取得する。
         /// </summary>
-        protected override int Intarval => IntervalTime;
+        protected override int Frame => Frames;
 
         #endregion
 
