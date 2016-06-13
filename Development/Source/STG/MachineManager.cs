@@ -16,17 +16,20 @@ namespace STG
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="machines">※nullな要素は除外されます</param>
-        internal MachineManager(IList<MachineAbstract> machines)
+        /// <param name="ownMachine">※nullな要素は除外されます</param>
+        internal MachineManager(OwnMachine ownMachine)
         {
-            Contract.Requires<ArgumentNullException>(machines != null);
+            Contract.Requires<ArgumentNullException>(ownMachine != null);
 
-            _Machines = machines.Where(m => m != null).ToList();
+            _Machines = new List<MachineAbstract>();
+            _Machines.Add(ownMachine);
 
-            foreach (var machine in _Machines)
+            _OwnMachine = ownMachine;
+
+            foreach (var m in _Machines)
             {
-                Contract.Assume(machine != null);
-                machine.MachinePositionChanged += Machine_MachinePositionChanged;
+                Contract.Assume(m != null);
+                m.MachinePositionChanged += Machine_MachinePositionChanged;
             }
         }
 
@@ -36,6 +39,8 @@ namespace STG
         #region フィールド
 
         readonly IList<MachineAbstract> _Machines;
+
+        readonly MachineAbstract _OwnMachine;
 
         #endregion
 
@@ -66,17 +71,17 @@ namespace STG
 
 
         #region メソッド
-
-#pragma warning disable CSE0003 // Use expression-bodied members
+        
         /// <summary>
         /// 自機を取得します。
         /// </summary>
         /// <returns></returns>
         public MachineAbstract GetOwnMachine()
         {
-            return _Machines.Where(m => m is OwnMachine).FirstOrDefault();
+            Contract.Ensures(Contract.Result<MachineAbstract>() != null);
+
+            return _OwnMachine;
         }
-#pragma warning restore CSE0003 // Use expression-bodied members
 
         /// <summary>
         /// 機体一覧を取得します。
@@ -100,6 +105,7 @@ namespace STG
         private void ObjectInvariant()
         {
             Contract.Invariant(_Machines != null);
+            Contract.Invariant(_OwnMachine != null);
         }
 
         #endregion

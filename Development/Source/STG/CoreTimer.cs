@@ -130,7 +130,12 @@ namespace STG
         /// インスタンスを取得します。
         /// </summary>
         /// <returns></returns>
-        public static CoreTimer GetInstance() => _Own;
+        public static CoreTimer GetInstance()
+        {
+            Contract.Ensures(Contract.Result<CoreTimer>() != null);
+
+            return _Own;
+        }
 
         /// <summary>
         /// 単位フレームの間隔を変更します。本処理後はタイマーが止まった状態となります。

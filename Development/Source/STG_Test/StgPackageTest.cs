@@ -75,7 +75,7 @@ namespace STG_Test
         [Test]
         public void MachineManager_GetOwnMachine()
         {
-            var manager = new MachineManager(new List<MachineAbstract>() { new OwnMachine(MachinePositionFactory.CreateMachinePositionInstance(new Position(50, 30))) });
+            var manager = new MachineManager(new OwnMachine(MachinePositionFactory.CreateMachinePositionInstance(new Position(50, 30))));
 
             Assert.That(manager.GetOwnMachine() is OwnMachine);
             Assert.That(manager.GetOwnMachine().Position.X == 50);
@@ -87,7 +87,7 @@ namespace STG_Test
         {
             Assert.Throws<ArgumentNullException>(() => new MachineManager(null));
 
-            Assert.DoesNotThrow(() => new MachineManager(new List<MachineAbstract>() { new OwnMachine(MachinePositionFactory.CreateMachinePositionInstance(new Position(50, 30))) }));
+            Assert.DoesNotThrow(() => new MachineManager(new OwnMachine(MachinePositionFactory.CreateMachinePositionInstance(new Position(50, 30)))));
         }
 
         [TestCase(Position.Direction.Right, 50, 50, FieldSize.DefaultUnitMovement, 0)]
@@ -97,7 +97,7 @@ namespace STG_Test
         public void MachineManager_移動(Position.Direction direction, int initX, int initY, int offsetX, int offsetY)
         {
             var own = new OwnMachine(MachinePositionFactory.CreateMachinePositionInstance(new Position(initX, initY)));
-            var manager = new MachineManager(new List<MachineAbstract>() { own });
+            var manager = new MachineManager(own);
             int count = 0;
             manager.MachinePositionChanged += (sender, e) =>
             {
@@ -136,8 +136,8 @@ namespace STG_Test
         public void MachineManager_移動_イベント登録なし(Position.Direction direction, int initX, int initY, int resultX, int resultY)
         {
             var own = new OwnMachine(MachinePositionFactory.CreateMachinePositionInstance(new Position(initX, initY)));
-            var manager = new MachineManager(new List<MachineAbstract>() { own });
-            
+            var manager = new MachineManager(own);
+
             for (int cnt = 0; cnt < 100; cnt++)
             {
                 switch (direction)

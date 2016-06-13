@@ -67,7 +67,7 @@ namespace STG
         /// <summary>
         /// 自機インスタンス
         /// </summary>
-        private MachineAbstract _OwnMachine;
+        private readonly MachineAbstract _OwnMachine;
 
         #endregion
 

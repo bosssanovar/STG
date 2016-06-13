@@ -22,10 +22,19 @@ namespace STG
         /// <param name="position"></param>
         public MachineFactory(Position position)
         {
-            Machines = new MachineManager(CreateMachineList(position));
+            _Machines = new MachineManager(CreateOwnMachine(position));
 
-            Input = new InputManager(CoreTimer.GetInstance(), Machines.GetOwnMachine());
+            _Input = new InputManager(CoreTimer.GetInstance(), Machines.GetOwnMachine());
         }
+
+        #endregion
+
+
+        #region フィールド
+
+        private readonly MachineManager _Machines;
+
+        private readonly InputManager _Input;
 
         #endregion
 
@@ -35,12 +44,26 @@ namespace STG
         /// <summary>
         /// <see cref="MachineManager"/>インスタンスを取得します。
         /// </summary>
-        public MachineManager Machines { get; }
+        public MachineManager Machines
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<MachineManager>() != null);
+                return _Machines;
+            }
+        }
 
         /// <summary>
         /// <see cref="InputManager"/>インスタンスを取得します。
         /// </summary>
-        public InputManager Input { get; }
+        public InputManager Input
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<InputManager>() != null);
+                return _Input;
+            }
+        }
 
         #endregion
 
@@ -48,20 +71,29 @@ namespace STG
         #region メソッド
 
         /// <summary>
-        /// 機体リストを生成します。
+        /// 自機を生成します。
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        private List<MachineAbstract> CreateMachineList(Position position)
+        private OwnMachine CreateOwnMachine(Position position)
         {
-            Contract.Ensures(Contract.Result<List<MachineAbstract>>() != null);
+            Contract.Ensures(Contract.Result<OwnMachine>() != null);
 
-            var ret = new List<MachineAbstract>()
-                {
-                    new OwnMachine(MachinePositionFactory.CreateMachinePositionInstance(position))
-                };
+            return new OwnMachine(MachinePositionFactory.CreateMachinePositionInstance(position));
+        }
 
-            return ret.Where(e => e != null).ToList();
+        #endregion
+
+        #region Invariant
+
+        /// <summary>
+        /// 不変契約を定義します。
+        /// </summary>
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(_Machines != null);
+            Contract.Invariant(_Input != null);
         }
 
         #endregion
