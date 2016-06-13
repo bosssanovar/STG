@@ -164,51 +164,68 @@ namespace STGApp.Models
         }
 
         /// <summary>
-        /// 自機を左へ移動する
+        /// 自機の左移動命令を登録します。
         /// </summary>
-        internal void MoveToLeft()
+        internal void AddLeftOrder()
         {
-            System.Threading.Tasks.Task.Run(new Action(() =>
-            {
-                _InputManager.MoveToLeft();
-            }
-            ));
+            _InputManager.AddLeftOrder();
         }
 
         /// <summary>
-        /// 自機を右へ移動する
+        /// 自機の左移動命令を削除します。
         /// </summary>
-        internal void MoveToRight()
+        internal void RemoveLeftOrder()
         {
-            System.Threading.Tasks.Task.Run(new Action(() =>
-            {
-                _InputManager.MoveToRight();
-            }
-            ));
+            _InputManager.RemoveLeftOrder();
+        }
+
+
+        /// <summary>
+        /// 自機の右移動命令を登録します。
+        /// </summary>
+        internal void AddRightOrder()
+        {
+            _InputManager.AddRightOrder();
         }
 
         /// <summary>
-        /// 自機を上へ移動する
+        /// 自機の右移動命令を削除します。
         /// </summary>
-        internal void MoveToUp()
+        internal void RemoveRightOrder()
         {
-            System.Threading.Tasks.Task.Run(new Action(() =>
-            {
-                _InputManager.MoveToUpper();
-            }
-            ));
+            _InputManager.RemoveRightOrder();
         }
 
         /// <summary>
-        /// 自機を下へ移動する
+        /// 自機の上移動命令を登録します。
         /// </summary>
-        internal void MoveToDown()
+        internal void AddUpOrder()
         {
-            System.Threading.Tasks.Task.Run(new Action(() =>
-            {
-                _InputManager.MoveToUnder();
-            }
-            ));
+            _InputManager.AddUpOrder();
+        }
+
+        /// <summary>
+        /// 自機の上移動命令を削除します。
+        /// </summary>
+        internal void RemoveUpOrder()
+        {
+            _InputManager.RemoveUpOrder();
+        }
+
+        /// <summary>
+        /// 自機の下移動命令を登録します。
+        /// </summary>
+        internal void AddDownOrder()
+        {
+            _InputManager.AddDownOrder();
+        }
+
+        /// <summary>
+        /// 自機の下移動命令を削除します。
+        /// </summary>
+        internal void RemoveDownOrder()
+        {
+            _InputManager.RemoveDownOrder();
         }
 
         /// <summary>

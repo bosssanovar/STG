@@ -62,10 +62,46 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <RepeatButton Grid.Row="0" Grid.Column="1" Content="↑" Interval="100" Delay="5" Command="{Binding MoveToUpCommand}"/>
-                <RepeatButton Grid.Row="1" Grid.Column="2" Content="→" Interval="100" Delay="5" Command="{Binding MoveToRightCommand}"/>
-                <RepeatButton Grid.Row="2" Grid.Column="1" Content="↓" Interval="100" Delay="5" Command="{Binding MoveToDownCommand}"/>
-                <RepeatButton Grid.Row="1" Grid.Column="0" Content="←" Interval="100" Delay="5" Command="{Binding MoveToLeftCommand}"/>
+                <Button Grid.Row="0" Grid.Column="1" Content="↑">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseDown" >
+                            <i:InvokeCommandAction Command="{Binding AddMoveUpOrderCommand}" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="PreviewMouseUp" >
+                            <i:InvokeCommandAction Command="{Binding RemoveMoveUpOrderCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button Grid.Row="1" Grid.Column="2" Content="→">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseDown" >
+                            <i:InvokeCommandAction Command="{Binding AddMoveRightOrderCommand}" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="PreviewMouseUp" >
+                            <i:InvokeCommandAction Command="{Binding RemoveMoveRightOrderCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button Grid.Row="2" Grid.Column="1" Content="↓">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseDown" >
+                            <i:InvokeCommandAction Command="{Binding AddMoveDownOrderCommand}" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="PreviewMouseUp" >
+                            <i:InvokeCommandAction Command="{Binding RemoveMoveDownOrderCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button Grid.Row="1" Grid.Column="0" Content="←">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseDown" >
+                            <i:InvokeCommandAction Command="{Binding AddMoveLeftOrderCommand}" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="PreviewMouseUp" >
+                            <i:InvokeCommandAction Command="{Binding RemoveMoveLeftOrderCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
 
             </Grid>
             

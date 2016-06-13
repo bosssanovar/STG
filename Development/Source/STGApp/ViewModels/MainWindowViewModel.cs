@@ -80,113 +80,239 @@ namespace STGApp.ViewModels
 
         #region コマンド
 
-        #region MoveToLeftCommand
-        private ViewModelCommand _MoveToLeftCommand;
+        #region Move Right
+
+        #region AddMoveRightOrderCommand
+        private ViewModelCommand _AddMoveRightOrderCommand;
 
         /// <summary>
-        /// MoveToLeftCommandコマンドを取得します。
+        /// 右動作命令追加コマンドを取得します。
         /// </summary>
-        public ViewModelCommand MoveToLeftCommand
+        public ViewModelCommand AddMoveRightOrderCommand
         {
             get
             {
-                if (_MoveToLeftCommand == null)
+                if (_AddMoveRightOrderCommand == null)
                 {
-                    _MoveToLeftCommand = new ViewModelCommand(MoveToLeft);
+                    _AddMoveRightOrderCommand = new ViewModelCommand(AddMoveRightOrder);
                 }
-                return _MoveToLeftCommand;
+                return _AddMoveRightOrderCommand;
             }
         }
 
         /// <summary>
-        /// 自機を左に移動します。
+        /// 右動作命令追加を送ります。
         /// </summary>
-        public void MoveToLeft()
+        public void AddMoveRightOrder()
         {
-            _Model.MoveToLeft();
+            _Model.AddRightOrder();
         }
         #endregion
 
-        #region MoveToRightCommand
-        private ViewModelCommand _MoveToRightCommand;
+        #region RemoveMoveRightOrderCommand
+        private ViewModelCommand _RemoveMoveRightOrderCommand;
 
         /// <summary>
-        /// MoveToRightCommandコマンドを取得します。
+        /// 右動作命令削除コマンドを取得します。
         /// </summary>
-        public ViewModelCommand MoveToRightCommand
+        public ViewModelCommand RemoveMoveRightOrderCommand
         {
             get
             {
-                if (_MoveToRightCommand == null)
+                if (_RemoveMoveRightOrderCommand == null)
                 {
-                    _MoveToRightCommand = new ViewModelCommand(MoveToRight);
+                    _RemoveMoveRightOrderCommand = new ViewModelCommand(RemoveMoveRightOrder);
                 }
-                return _MoveToRightCommand;
+                return _RemoveMoveRightOrderCommand;
             }
         }
 
         /// <summary>
-        /// 自機を右に移動します。
+        /// 右動作命令削除を送ります。
         /// </summary>
-        public void MoveToRight()
+        public void RemoveMoveRightOrder()
         {
-            _Model.MoveToRight();
+            _Model.RemoveRightOrder();
         }
         #endregion
 
-        #region MoveToUpCommand
-        private ViewModelCommand _MoveToUpCommand;
+        #endregion
+
+        #region Move Left
+
+        #region AddMoveLeftOrderCommand
+        private ViewModelCommand _AddMoveLeftOrderCommand;
 
         /// <summary>
-        /// MoveToUpCommandコマンドを取得します。
+        /// 左動作命令追加コマンドを取得します。
         /// </summary>
-        public ViewModelCommand MoveToUpCommand
+        public ViewModelCommand AddMoveLeftOrderCommand
         {
             get
             {
-                if (_MoveToUpCommand == null)
+                if (_AddMoveLeftOrderCommand == null)
                 {
-                    _MoveToUpCommand = new ViewModelCommand(MoveToUp);
+                    _AddMoveLeftOrderCommand = new ViewModelCommand(AddMoveLeftOrder);
                 }
-                return _MoveToUpCommand;
+                return _AddMoveLeftOrderCommand;
             }
         }
 
         /// <summary>
-        /// 自機を上に移動します。
+        /// 左動作命令追加を送ります。
         /// </summary>
-        public void MoveToUp()
+        public void AddMoveLeftOrder()
         {
-            _Model.MoveToUp();
+            _Model.AddLeftOrder();
         }
         #endregion
 
-        #region MoveToDownCommand
-        private ViewModelCommand _MoveToDownCommand;
+        #region RemoveMoveLeftOrderCommand
+        private ViewModelCommand _RemoveMoveLeftOrderCommand;
 
         /// <summary>
-        /// MoveToDownCommandコマンドを取得します。
+        /// 左動作命令削除コマンドを取得します。
         /// </summary>
-        public ViewModelCommand MoveToDownCommand
+        public ViewModelCommand RemoveMoveLeftOrderCommand
         {
             get
             {
-                if (_MoveToDownCommand == null)
+                if (_RemoveMoveLeftOrderCommand == null)
                 {
-                    _MoveToDownCommand = new ViewModelCommand(MoveToDown);
+                    _RemoveMoveLeftOrderCommand = new ViewModelCommand(RemoveMoveLeftOrder);
                 }
-                return _MoveToDownCommand;
+                return _RemoveMoveLeftOrderCommand;
             }
         }
 
         /// <summary>
-        /// 自機を下に移動します。
+        /// 左動作命令削除を送ります。
         /// </summary>
-        public void MoveToDown()
+        public void RemoveMoveLeftOrder()
         {
-            _Model.MoveToDown();
+            _Model.RemoveLeftOrder();
         }
         #endregion
+
+        #endregion
+
+        #region Move Up
+
+        #region AddMoveUpOrderCommand
+        private ViewModelCommand _AddMoveUpOrderCommand;
+
+        /// <summary>
+        /// 上動作命令追加コマンドを取得します。
+        /// </summary>
+        public ViewModelCommand AddMoveUpOrderCommand
+        {
+            get
+            {
+                if (_AddMoveUpOrderCommand == null)
+                {
+                    _AddMoveUpOrderCommand = new ViewModelCommand(AddMoveUpOrder);
+                }
+                return _AddMoveUpOrderCommand;
+            }
+        }
+
+        /// <summary>
+        /// 上動作命令追加を送ります。
+        /// </summary>
+        public void AddMoveUpOrder()
+        {
+            _Model.AddUpOrder();
+        }
+        #endregion
+
+        #region RemoveMoveUpOrderCommand
+        private ViewModelCommand _RemoveMoveUpOrderCommand;
+
+        /// <summary>
+        /// 上動作命令削除コマンドを取得します。
+        /// </summary>
+        public ViewModelCommand RemoveMoveUpOrderCommand
+        {
+            get
+            {
+                if (_RemoveMoveUpOrderCommand == null)
+                {
+                    _RemoveMoveUpOrderCommand = new ViewModelCommand(RemoveMoveUpOrder);
+                }
+                return _RemoveMoveUpOrderCommand;
+            }
+        }
+
+        /// <summary>
+        /// 上動作命令削除を送ります。
+        /// </summary>
+        public void RemoveMoveUpOrder()
+        {
+            _Model.RemoveUpOrder();
+        }
+        #endregion
+
+        #endregion
+
+        #region Move Down
+
+        #region AddMoveDownOrderCommand
+        private ViewModelCommand _AddMoveDownOrderCommand;
+
+        /// <summary>
+        /// 下動作命令追加コマンドを取得します。
+        /// </summary>
+        public ViewModelCommand AddMoveDownOrderCommand
+        {
+            get
+            {
+                if (_AddMoveDownOrderCommand == null)
+                {
+                    _AddMoveDownOrderCommand = new ViewModelCommand(AddMoveDownOrder);
+                }
+                return _AddMoveDownOrderCommand;
+            }
+        }
+
+        /// <summary>
+        /// 下動作命令追加を送ります。
+        /// </summary>
+        public void AddMoveDownOrder()
+        {
+            _Model.AddDownOrder();
+        }
+        #endregion
+
+        #region RemoveMoveDownOrderCommand
+        private ViewModelCommand _RemoveMoveDownOrderCommand;
+
+        /// <summary>
+        /// 下動作命令削除コマンドを取得します。
+        /// </summary>
+        public ViewModelCommand RemoveMoveDownOrderCommand
+        {
+            get
+            {
+                if (_RemoveMoveDownOrderCommand == null)
+                {
+                    _RemoveMoveDownOrderCommand = new ViewModelCommand(RemoveMoveDownOrder);
+                }
+                return _RemoveMoveDownOrderCommand;
+            }
+        }
+
+        /// <summary>
+        /// 下動作命令削除を送ります。
+        /// </summary>
+        public void RemoveMoveDownOrder()
+        {
+            _Model.RemoveDownOrder();
+        }
+        #endregion
+
+        #endregion
+
+
 
         #endregion
 
