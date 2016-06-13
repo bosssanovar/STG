@@ -3,69 +3,69 @@ using STG.Parameters;
 
 namespace STG.MachinePosition
 {
-	/// <summary>
-	/// 移動タイムラグが200ミリ秒、全方位正常動作する機体位置クラス
-	/// </summary>
-	internal class NormalMachinePosition : MachinePositionAbstract
-	{
-		#region コンストラクタ/デストラクタ
+    /// <summary>
+    /// <see cref="Frames"/>フレーム後に、全方位正常動作する機体位置クラス
+    /// </summary>
+    internal class NormalMachinePosition : MachinePositionAbstract
+    {
+        #region コンストラクタ/デストラクタ
 
-		/// <summary>
-		/// コンストラクタ
-		/// </summary>
-		/// <param name="position"></param>
-		internal NormalMachinePosition(Position position) : base(position)
-		{
-		}
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="position"></param>
+        internal NormalMachinePosition(Position position) : base(position)
+        {
+        }
 
-		#endregion
-
-
-		#region 定数
-
-		/// <summary>
-		/// 移動タイムラグ時間(ミリ秒)
-		/// </summary>
-		internal const int IntervalTime = 200;
-
-		#endregion
+        #endregion
 
 
-		#region プロパティ
+        #region 定数
 
-		/// <summary>
-		/// 移動指示から移動が完了するまでのラグ(ミリ秒)を設定または取得します。
-		/// </summary>
-		protected override int Intarval => IntervalTime;
+        /// <summary>
+        /// フレーム数
+        /// </summary>
+        internal const int Frames = 3;
 
-		#endregion
+        #endregion
 
 
-		#region メソッド
+        #region プロパティ
 
-		/// <summary>
-		/// 次のX軸負方向位置を取得します。
-		/// </summary>
-		/// <returns></returns>
-		protected override Position GetLeftPosition() => new Position(this.Position.X - 1, this.Position.Y);
+        /// <summary>
+        /// 移動を行うまでのフレーム数を取得する。
+        /// </summary>
+        protected override int Frame => Frames;
 
-		/// <summary>
-		/// 次のX軸正方向位置を取得します。
-		/// </summary>
-		/// <returns></returns>
-		protected override Position GetRightPosition() => new Position(this.Position.X + 1, this.Position.Y);
+        #endregion
 
-		/// <summary>
-		/// 次のY軸負方向位置を取得します。
-		/// </summary>
-		/// <returns></returns>
-		protected override Position GetUnderPosition() => new Position(this.Position.X, this.Position.Y - 1);
 
-		/// <summary>
-		/// 次のY軸正方向位置を取得します。
-		/// </summary>
-		/// <returns></returns>
-		protected override Position GetUpperPosition() => new Position(this.Position.X, this.Position.Y + 1);
-		#endregion
-	}
+        #region メソッド
+
+        /// <summary>
+        /// 次のX軸負方向位置を取得します。
+        /// </summary>
+        /// <returns></returns>
+        protected override Position GetLeftPosition() => new Position(this.Position.X - FieldSizeFactory.GetFieldSizeInstance().UnitMovement, this.Position.Y);
+
+        /// <summary>
+        /// 次のX軸正方向位置を取得します。
+        /// </summary>
+        /// <returns></returns>
+        protected override Position GetRightPosition() => new Position(this.Position.X + FieldSizeFactory.GetFieldSizeInstance().UnitMovement, this.Position.Y);
+
+        /// <summary>
+        /// 次のY軸負方向位置を取得します。
+        /// </summary>
+        /// <returns></returns>
+        protected override Position GetUnderPosition() => new Position(this.Position.X, this.Position.Y - FieldSizeFactory.GetFieldSizeInstance().UnitMovement);
+
+        /// <summary>
+        /// 次のY軸正方向位置を取得します。
+        /// </summary>
+        /// <returns></returns>
+        protected override Position GetUpperPosition() => new Position(this.Position.X, this.Position.Y + FieldSizeFactory.GetFieldSizeInstance().UnitMovement);
+        #endregion
+    }
 }

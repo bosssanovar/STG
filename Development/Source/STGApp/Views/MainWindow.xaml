@@ -6,18 +6,18 @@
         xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
         xmlns:v="clr-namespace:STGApp.Views"
         xmlns:vm="clr-namespace:STGApp.ViewModels"
-        Title="MainWindow" Height="350" Width="525">
-    
+        Title="MainWindow" ResizeMode="NoResize" SizeToContent="WidthAndHeight">
+
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-    
+
     <i:Interaction.Triggers>
-    
-    	<!--Viewに特別な要件が存在しない限りは、トリガーやアクションの自作にこだわらず積極的にコードビハインドを使いましょう -->
-    	<!--Viewのコードビハインドは、基本的にView内で完結するロジックとViewModelからのイベントの受信(専用リスナを使用する)に限るとトラブルが少なくなります -->
-    	<!--Livet1.1からはコードビハインドでViewModelのイベントを受信するためのWeakEventLisnterサポートが追加されています --> 
-        
+
+        <!--Viewに特別な要件が存在しない限りは、トリガーやアクションの自作にこだわらず積極的にコードビハインドを使いましょう -->
+        <!--Viewのコードビハインドは、基本的にView内で完結するロジックとViewModelからのイベントの受信(専用リスナを使用する)に限るとトラブルが少なくなります -->
+        <!--Livet1.1からはコードビハインドでViewModelのイベントを受信するためのWeakEventLisnterサポートが追加されています -->
+
         <!--WindowのContentRenderedイベントのタイミングでViewModelのInitializeメソッドが呼ばれます-->
         <i:EventTrigger EventName="ContentRendered">
             <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
@@ -31,8 +31,80 @@
         <!--WindowのCloseキャンセル処理に対応する場合は、WindowCloseCancelBehaviorの使用を検討してください-->
 
     </i:Interaction.Triggers>
-    
+
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Canvas Background="MidnightBlue" Height="{Binding FieldHeight}" Width="{Binding FieldWidth}">
+            <Ellipse Fill="White" Height="22" Stroke="Black" Width="22" Canvas.Left="{Binding OwnMachinePositionX}" Canvas.Bottom="{Binding OwnMachinePositionY}" Margin="-11,0, 0,-11"/>
+        </Canvas>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Button Grid.Row="0" Grid.Column="1" Content="↑">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseDown" >
+                            <i:InvokeCommandAction Command="{Binding AddMoveUpOrderCommand}" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="PreviewMouseUp" >
+                            <i:InvokeCommandAction Command="{Binding RemoveMoveUpOrderCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button Grid.Row="1" Grid.Column="2" Content="→">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseDown" >
+                            <i:InvokeCommandAction Command="{Binding AddMoveRightOrderCommand}" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="PreviewMouseUp" >
+                            <i:InvokeCommandAction Command="{Binding RemoveMoveRightOrderCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button Grid.Row="2" Grid.Column="1" Content="↓">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseDown" >
+                            <i:InvokeCommandAction Command="{Binding AddMoveDownOrderCommand}" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="PreviewMouseUp" >
+                            <i:InvokeCommandAction Command="{Binding RemoveMoveDownOrderCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button Grid.Row="1" Grid.Column="0" Content="←">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseDown" >
+                            <i:InvokeCommandAction Command="{Binding AddMoveLeftOrderCommand}" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="PreviewMouseUp" >
+                            <i:InvokeCommandAction Command="{Binding RemoveMoveLeftOrderCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+
+            </Grid>
+            
+        </Grid>
     </Grid>
 </Window>

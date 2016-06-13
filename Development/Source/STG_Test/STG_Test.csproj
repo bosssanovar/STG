@@ -60,10 +60,14 @@
     <Compile Include="StgPackageTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Livet">
+      <HintPath>..\STGApp\InfrastructureAssemblies\Livet.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.2.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.2.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
