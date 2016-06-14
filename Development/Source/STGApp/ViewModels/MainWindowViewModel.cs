@@ -12,6 +12,7 @@ using Livet.EventListeners;
 using Livet.Messaging.Windows;
 
 using STGApp.Models;
+using System.Windows.Input;
 
 namespace STGApp.ViewModels
 {
@@ -50,11 +51,16 @@ namespace STGApp.ViewModels
         /// </summary>
         private Model _Model;
 
+        /// <summary>
+        /// 直前に入力されたキー
+        /// </summary>
+        private Key _LastKey = Key.None;
+
         #endregion
 
 
         #region プロパティ
-        
+
         /// <summary>
         /// 自機位置のX座標を設定または取得します。
         /// </summary>
@@ -79,6 +85,101 @@ namespace STGApp.ViewModels
 
 
         #region コマンド
+
+        #region KeyDownCommand
+        private ListenerCommand<Key> _KeyDownCommand;
+
+        /// <summary>
+        /// Key Downコマンドを取得します。
+        /// </summary>
+        public ListenerCommand<Key> KeyDownCommand
+        {
+            get
+            {
+                if (_KeyDownCommand == null)
+                {
+                    _KeyDownCommand = new ListenerCommand<Key>(KeyDown);
+                }
+                return _KeyDownCommand;
+            }
+        }
+
+        /// <summary>
+        /// Key Down時処理
+        /// </summary>
+        /// <param name="key"></param>
+        public void KeyDown(Key key)
+        {
+            if (_LastKey == key) return;
+
+            switch (key)
+            {
+                case Key.E:
+                    _Model.AddUpOrder();
+                    Console.Write("E");
+                    break;
+                case Key.D:
+                    _Model.AddDownOrder();
+                    break;
+                case Key.F:
+                    _Model.AddRightOrder();
+                    break;
+                case Key.S:
+                    _Model.AddLeftOrder();
+                    break;
+                default:
+                    break;
+            }
+
+            _LastKey = key;
+        }
+        #endregion
+
+        #region KeyUpCommand
+        private ListenerCommand<Key> _KeyUpCommand;
+
+        /// <summary>
+        /// Key Downコマンドを取得します。
+        /// </summary>
+        public ListenerCommand<Key> KeyUpCommand
+        {
+            get
+            {
+                if (_KeyUpCommand == null)
+                {
+                    _KeyUpCommand = new ListenerCommand<Key>(KeyUp);
+                }
+                return _KeyUpCommand;
+            }
+        }
+
+        /// <summary>
+        /// Key Down時処理
+        /// </summary>
+        /// <param name="key"></param>
+        public void KeyUp(Key key)
+        {
+            switch (key)
+            {
+                case Key.E:
+                    _Model.RemoveUpOrder();
+                    break;
+                case Key.D:
+                    _Model.RemoveDownOrder();
+                    break;
+                case Key.F:
+                    _Model.RemoveRightOrder();
+                    break;
+                case Key.S:
+                    _Model.RemoveLeftOrder();
+                    break;
+                default:
+                    break;
+            }
+
+            if (_LastKey == key) _LastKey = Key.None;
+        }
+        #endregion
 
         #region Move Right
 

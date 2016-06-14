@@ -34,5 +34,5 @@ namespace STGApp.Views
 		{
 			InitializeComponent();
 		}
-	}
+    }
 }

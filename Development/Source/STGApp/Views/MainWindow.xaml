@@ -6,11 +6,22 @@
         xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
         xmlns:v="clr-namespace:STGApp.Views"
         xmlns:vm="clr-namespace:STGApp.ViewModels"
-        Title="MainWindow" ResizeMode="NoResize" SizeToContent="WidthAndHeight">
+        xmlns:behavior="clr-namespace:STGApp.Views.Behavior"
+        Title="MainWindow" ResizeMode="NoResize" SizeToContent="WidthAndHeight"
+        >
+
+    <i:Interaction.Behaviors>
+        <behavior:KeyDownBehavior KeyDownCommand="{Binding KeyDownCommand}" />
+        <behavior:KeyUpBehavior KeyUpCommand="{Binding KeyUpCommand}" />
+    </i:Interaction.Behaviors>
 
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
+
+    <Window.InputBindings>
+        <KeyBinding Key="Up" Gesture=""/>
+    </Window.InputBindings>
 
     <i:Interaction.Triggers>
 
@@ -104,7 +115,7 @@
                 </Button>
 
             </Grid>
-            
+
         </Grid>
     </Grid>
 </Window>

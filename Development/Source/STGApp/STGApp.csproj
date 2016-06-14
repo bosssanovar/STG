@@ -93,6 +93,8 @@
     <Compile Include="Models\InputManager.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="Views\Behavior\KeyDownBehavior.cs" />
+    <Compile Include="Views\Behavior\KeyUpBehavior.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
