@@ -157,14 +157,14 @@ namespace STGApp.Models
             OwnMachinePosition = e.Position;
         }
 
-		internal void SetOrder(Order order)
+		internal void SetOrder(MoveOrder order)
 		{
-			_GameManager.InputManager.SetOrder(order);
+			_GameManager.InputManager.SetMoveOrder(order);
 		}
 
 		internal void ClearOrder()
 		{
-			_GameManager.InputManager.SetOrder(Order.None);
+			_GameManager.InputManager.SetMoveOrder(MoveOrder.None);
 		}
 
         /// <summary>

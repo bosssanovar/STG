@@ -37,7 +37,7 @@ namespace STGApp.ViewModels
 		/// <summary>
 		/// 現在の方向を取得します。
 		/// </summary>
-		public Order CurrentDirection { get; private set; } = Order.None;
+		public MoveOrder CurrentDirection { get; private set; } = MoveOrder.None;
 
 		#endregion
 
@@ -104,26 +104,26 @@ namespace STGApp.ViewModels
 		/// 現在の押下されているキー状況から、方向を取得します。
 		/// </summary>
 		/// <returns></returns>
-		private Order GetDirection()
+		private MoveOrder GetDirection()
 		{
-			var ret = Order.None;
+			var ret = MoveOrder.None;
 
 			switch (_Keys.LastOrDefault())
 			{
 				case Key.E:
-					ret = Order.MoveUp;
+					ret = MoveOrder.MoveUp;
 					break;
 				case Key.D:
-					ret = Order.MoveDown;
+					ret = MoveOrder.MoveDown;
 					break;
 				case Key.F:
-					ret = Order.MoveRight;
+					ret = MoveOrder.MoveRight;
 					break;
 				case Key.S:
-					ret = Order.MoveLeft;
+					ret = MoveOrder.MoveLeft;
 					break;
 				default:
-					ret = Order.None;
+					ret = MoveOrder.None;
 					break;
 			}
 

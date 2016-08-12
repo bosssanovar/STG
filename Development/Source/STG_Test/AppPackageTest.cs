@@ -18,7 +18,7 @@ namespace STG_Test
 		{
 			var m = new DirectionKeyManager();
 
-			Assert.That(m.CurrentDirection == STG.InputManager.Order.None);
+			Assert.That(m.CurrentDirection == STG.InputManager.MoveOrder.None);
 		}
 
 		[TestCase(Key.E, Key.D, Key.F, Key.S)]
@@ -47,29 +47,29 @@ namespace STG_Test
 			m.SetReleasedKey(key3);
 			Assert.That(m.CurrentDirection == GetOrder(key2));
 			m.SetReleasedKey(key2);
-			Assert.That(m.CurrentDirection == Order.None);
+			Assert.That(m.CurrentDirection == MoveOrder.None);
 		}
 
-		private Order GetOrder(Key key)
+		private MoveOrder GetOrder(Key key)
 		{
-			var ret = Order.None;
+			var ret = MoveOrder.None;
 
 			switch (key)
 			{
 				case Key.E:
-					ret = Order.MoveUp;
+					ret = MoveOrder.MoveUp;
 					break;
 				case Key.D:
-					ret = Order.MoveDown;
+					ret = MoveOrder.MoveDown;
 					break;
 				case Key.F:
-					ret = Order.MoveRight;
+					ret = MoveOrder.MoveRight;
 					break;
 				case Key.S:
-					ret = Order.MoveLeft;
+					ret = MoveOrder.MoveLeft;
 					break;
 				default:
-					ret = Order.None;
+					ret = MoveOrder.None;
 					break;
 			}
 
@@ -80,7 +80,7 @@ namespace STG_Test
 		public void DirectionKeyManager_変更通知発行(Key key1, Key key2, Key key3, Key key4)
 		{
 			var m = new DirectionKeyManager();
-			Order order = Order.None;
+			MoveOrder order = MoveOrder.None;
 			var handler = new EventHandler<DirectionChangedEventArgs>(
 				(sender, e) =>
 				{
@@ -105,7 +105,7 @@ namespace STG_Test
 			m.SetReleasedKey(key1);
 			order = GetOrder(key2);
 			m.SetReleasedKey(key3);
-			order = Order.None;
+			order = MoveOrder.None;
 			m.SetReleasedKey(key2);
 
 		}

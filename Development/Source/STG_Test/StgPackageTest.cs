@@ -366,19 +366,19 @@ namespace STG_Test
             Assert.DoesNotThrow(() => new InputManager(CoreTimer.GetInstance(), new OwnMachine(new NormalMachinePosition(new Position(10, 10)))));
         }
 
-        [TestCase(InputManager.Order.MoveDown, 50, 50 - FieldSize.DefaultUnitMovement)]
-        [TestCase(InputManager.Order.MoveLeft, 50 - FieldSize.DefaultUnitMovement, 50)]
-        [TestCase(InputManager.Order.MoveRight, 50 + FieldSize.DefaultUnitMovement, 50)]
-        [TestCase(InputManager.Order.MoveUp, 50, 50 + FieldSize.DefaultUnitMovement)]
-        [TestCase(InputManager.Order.None, 50, 50)]
-        public void InputManagerTest_AddRemoveOrder(InputManager.Order order, int resultX, int resultY)
+        [TestCase(InputManager.MoveOrder.MoveDown, 50, 50 - FieldSize.DefaultUnitMovement)]
+        [TestCase(InputManager.MoveOrder.MoveLeft, 50 - FieldSize.DefaultUnitMovement, 50)]
+        [TestCase(InputManager.MoveOrder.MoveRight, 50 + FieldSize.DefaultUnitMovement, 50)]
+        [TestCase(InputManager.MoveOrder.MoveUp, 50, 50 + FieldSize.DefaultUnitMovement)]
+        [TestCase(InputManager.MoveOrder.None, 50, 50)]
+        public void InputManagerTest_AddRemoveOrder(InputManager.MoveOrder order, int resultX, int resultY)
         {
             FieldSizeFactory.GetFieldSizeInstance().SetUnitMovement(FieldSize.DefaultUnitMovement);
 
             var own = new OwnMachine(new NormalMachinePosition(new Position(50, 50)));
             var manager = new InputManager(CoreTimer.GetInstance(), own);
 
-            manager.SetOrder(order);
+            manager.SetMoveOrder(order);
             for (int cnt = 0; cnt < NormalMachinePosition.Frames; cnt++)
             {
                 manager.GetType().InvokeMember("RequestOwnMachineMove", BindingFlags.InvokeMethod | BindingFlags.NonPublic | BindingFlags.Instance, null, manager, null);
@@ -386,7 +386,7 @@ namespace STG_Test
             Assert.That(own.Position.X == resultX);
             Assert.That(own.Position.Y == resultY);
 
-            manager.SetOrder(InputManager.Order.None);
+            manager.SetMoveOrder(InputManager.MoveOrder.None);
             for (int cnt = 0; cnt < NormalMachinePosition.Frames; cnt++)
             {
                 manager.GetType().InvokeMember("RequestOwnMachineMove", BindingFlags.InvokeMethod | BindingFlags.NonPublic | BindingFlags.Instance, null, manager, null);
@@ -395,11 +395,11 @@ namespace STG_Test
             Assert.That(own.Position.Y == resultY);
         }
 
-        [TestCase(InputManager.Order.MoveDown, 50, 50 - FieldSize.DefaultUnitMovement)]
-        [TestCase(InputManager.Order.MoveLeft, 50 - FieldSize.DefaultUnitMovement, 50)]
-        [TestCase(InputManager.Order.MoveRight, 50 + FieldSize.DefaultUnitMovement, 50)]
-        [TestCase(InputManager.Order.MoveUp, 50, 50 + FieldSize.DefaultUnitMovement)]
-        public void InputManagerTest_AddRemoveOrderTimer(InputManager.Order order, int resultX, int resultY)
+        [TestCase(InputManager.MoveOrder.MoveDown, 50, 50 - FieldSize.DefaultUnitMovement)]
+        [TestCase(InputManager.MoveOrder.MoveLeft, 50 - FieldSize.DefaultUnitMovement, 50)]
+        [TestCase(InputManager.MoveOrder.MoveRight, 50 + FieldSize.DefaultUnitMovement, 50)]
+        [TestCase(InputManager.MoveOrder.MoveUp, 50, 50 + FieldSize.DefaultUnitMovement)]
+        public void InputManagerTest_AddRemoveOrderTimer(InputManager.MoveOrder order, int resultX, int resultY)
         {
             FieldSizeFactory.GetFieldSizeInstance().SetUnitMovement(FieldSize.DefaultUnitMovement);
 
@@ -407,7 +407,7 @@ namespace STG_Test
             var timer = CoreTimer.GetInstance();
             var manager = new InputManager(timer, own);
 
-            manager.SetOrder(order);
+            manager.SetMoveOrder(order);
             timer.StartTimer();
             bool isSuccess = false;
             own.MachinePositionChanged += (sender, e) =>
@@ -419,7 +419,7 @@ namespace STG_Test
                 };
             while (!isSuccess) { }
 
-            manager.SetOrder(InputManager.Order.None);
+            manager.SetMoveOrder(InputManager.MoveOrder.None);
             timer.StartTimer();
             System.Threading.Thread.Sleep(1000);
             timer.StopTimer();
@@ -428,8 +428,8 @@ namespace STG_Test
         }
 
 
-        [TestCase(InputManager.Order.None, 50, 50)]
-        public void InputManagerTest_AddRemoveOrderTimer_OrderNone(InputManager.Order order, int resultX, int resultY)
+        [TestCase(InputManager.MoveOrder.None, 50, 50)]
+        public void InputManagerTest_AddRemoveOrderTimer_OrderNone(InputManager.MoveOrder order, int resultX, int resultY)
         {
             FieldSizeFactory.GetFieldSizeInstance().SetUnitMovement(FieldSize.DefaultUnitMovement);
 
@@ -437,7 +437,7 @@ namespace STG_Test
             var timer = CoreTimer.GetInstance();
             var manager = new InputManager(timer, own);
 
-            manager.SetOrder(order);
+            manager.SetMoveOrder(order);
             timer.StartTimer();
             own.MachinePositionChanged += (sender, e) =>
             {
@@ -446,7 +446,7 @@ namespace STG_Test
             };
             System.Threading.Thread.Sleep(1000);
 
-            manager.SetOrder(InputManager.Order.None);
+            manager.SetMoveOrder(InputManager.MoveOrder.None);
             timer.StartTimer();
             System.Threading.Thread.Sleep(1000);
             timer.StopTimer();

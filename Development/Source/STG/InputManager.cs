@@ -38,9 +38,9 @@ namespace STG
         #region enum
 
         /// <summary>
-        /// 命令の列挙
+        /// 移動命令の列挙
         /// </summary>
-        public enum Order
+        public enum MoveOrder
         {
             /// <summary>なし</summary>
             None,
@@ -60,9 +60,9 @@ namespace STG
         #region フィールド
 
         /// <summary>
-        /// 命令一覧
+        /// 移動命令一覧
         /// </summary>
-        private Order _Orders = Order.None;
+        private MoveOrder _MoveOrders = MoveOrder.None;
 
         /// <summary>
         /// 自機インスタンス
@@ -110,18 +110,18 @@ namespace STG
         /// </summary>
         private void RequestOwnMachineMove()
         {
-            switch (_Orders)
+            switch (_MoveOrders)
             {
-                case Order.MoveUp:
+                case MoveOrder.MoveUp:
                     _OwnMachine.MoveToUpper();
                     break;
-                case Order.MoveDown:
+                case MoveOrder.MoveDown:
                     _OwnMachine.MoveToUnder();
                     break;
-                case Order.MoveRight:
+                case MoveOrder.MoveRight:
                     _OwnMachine.MoveToRight();
                     break;
-                case Order.MoveLeft:
+                case MoveOrder.MoveLeft:
                     _OwnMachine.MoveToLeft();
                     break;
                 default:
@@ -133,9 +133,9 @@ namespace STG
         /// 操作命令を設定します。
         /// </summary>
         /// <param name="order"></param>
-        public void SetOrder(Order order)
+        public void SetMoveOrder(MoveOrder order)
         {
-            _Orders = order;
+            _MoveOrders = order;
         }
 
         #endregion

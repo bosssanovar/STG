@@ -190,7 +190,7 @@ namespace STGApp.ViewModels
         /// </summary>
         public void AddMoveRightOrder()
         {
-			_Model.SetOrder(STG.InputManager.Order.MoveRight);
+			_Model.SetOrder(STG.InputManager.MoveOrder.MoveRight);
         }
         #endregion
 
@@ -248,7 +248,7 @@ namespace STGApp.ViewModels
         /// </summary>
         public void AddMoveLeftOrder()
 		{
-			_Model.SetOrder(STG.InputManager.Order.MoveLeft);
+			_Model.SetOrder(STG.InputManager.MoveOrder.MoveLeft);
 		}
         #endregion
 
@@ -306,7 +306,7 @@ namespace STGApp.ViewModels
         /// </summary>
         public void AddMoveUpOrder()
 		{
-			_Model.SetOrder(STG.InputManager.Order.MoveUp);
+			_Model.SetOrder(STG.InputManager.MoveOrder.MoveUp);
 		}
         #endregion
 
@@ -364,7 +364,7 @@ namespace STGApp.ViewModels
         /// </summary>
         public void AddMoveDownOrder()
 		{
-			_Model.SetOrder(STG.InputManager.Order.MoveDown);
+			_Model.SetOrder(STG.InputManager.MoveOrder.MoveDown);
 		}
         #endregion
 

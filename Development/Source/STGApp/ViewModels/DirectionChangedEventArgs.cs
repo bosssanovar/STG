@@ -17,7 +17,7 @@ namespace STGApp.ViewModels
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="order"></param>
-		public DirectionChangedEventArgs(STG.InputManager.Order order)
+		public DirectionChangedEventArgs(STG.InputManager.MoveOrder order)
 		{
 			Order = order;
 		}
@@ -30,7 +30,7 @@ namespace STGApp.ViewModels
 		/// <summary>
 		/// 方向を取得します。
 		/// </summary>
-		public STG.InputManager.Order Order { get; }
+		public STG.InputManager.MoveOrder Order { get; }
 
 		#endregion
 	}
