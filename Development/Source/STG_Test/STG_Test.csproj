@@ -48,12 +48,17 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\STGApp\STGApp.csproj">
+      <Project>{E2457202-0273-4126-8F80-FCE262889D84}</Project>
+      <Name>STGApp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\STG\STG.csproj">
       <Project>{d56e0516-9660-4913-8375-4fc3c0bb3343}</Project>
       <Name>STG</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppPackageTest.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MachinePositionTest.cs" />
     <Compile Include="ParametersPackageTest.cs" />

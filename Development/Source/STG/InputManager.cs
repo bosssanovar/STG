@@ -130,21 +130,12 @@ namespace STG
         }
 
         /// <summary>
-        /// 操作命令を追加します。
+        /// 操作命令を設定します。
         /// </summary>
         /// <param name="order"></param>
-        public void AddOrder(Order order)
+        public void SetOrder(Order order)
         {
             _Orders = order;
-        }
-
-        /// <summary>
-        /// 操作命令を削除します。
-        /// </summary>
-        /// <param name="order"></param>
-        public void RemoveOrder(Order order)
-        {
-            _Orders = Order.None;
         }
 
         #endregion

@@ -188,12 +188,22 @@ namespace STG_Test
             Assert.That(manager is MachineManager);
             Assert.That(manager.GetOwnMachine().Position.X == 50);
             Assert.That(manager.GetOwnMachine().Position.Y == 30);
+
+            var input = factory.Input;
+            Assert.That(input is InputManager);
         }
     }
 
     [TestFixture]
     class CoreTimerTest
     {
+		[TestCase]
+		public void CoreTimer_生成破棄()
+		{
+			var timer = CoreTimer.GetInstance();
+			timer.Dispose();
+		}
+
         [TestCase]
         public void CoreTimerTest_MachineMoveTick()
         {
@@ -368,7 +378,7 @@ namespace STG_Test
             var own = new OwnMachine(new NormalMachinePosition(new Position(50, 50)));
             var manager = new InputManager(CoreTimer.GetInstance(), own);
 
-            manager.AddOrder(order);
+            manager.SetOrder(order);
             for (int cnt = 0; cnt < NormalMachinePosition.Frames; cnt++)
             {
                 manager.GetType().InvokeMember("RequestOwnMachineMove", BindingFlags.InvokeMethod | BindingFlags.NonPublic | BindingFlags.Instance, null, manager, null);
@@ -376,7 +386,7 @@ namespace STG_Test
             Assert.That(own.Position.X == resultX);
             Assert.That(own.Position.Y == resultY);
 
-            manager.RemoveOrder(order);
+            manager.SetOrder(InputManager.Order.None);
             for (int cnt = 0; cnt < NormalMachinePosition.Frames; cnt++)
             {
                 manager.GetType().InvokeMember("RequestOwnMachineMove", BindingFlags.InvokeMethod | BindingFlags.NonPublic | BindingFlags.Instance, null, manager, null);
@@ -397,7 +407,7 @@ namespace STG_Test
             var timer = CoreTimer.GetInstance();
             var manager = new InputManager(timer, own);
 
-            manager.AddOrder(order);
+            manager.SetOrder(order);
             timer.StartTimer();
             bool isSuccess = false;
             own.MachinePositionChanged += (sender, e) =>
@@ -409,7 +419,7 @@ namespace STG_Test
                 };
             while (!isSuccess) { }
 
-            manager.RemoveOrder(order);
+            manager.SetOrder(InputManager.Order.None);
             timer.StartTimer();
             System.Threading.Thread.Sleep(1000);
             timer.StopTimer();
@@ -427,7 +437,7 @@ namespace STG_Test
             var timer = CoreTimer.GetInstance();
             var manager = new InputManager(timer, own);
 
-            manager.AddOrder(order);
+            manager.SetOrder(order);
             timer.StartTimer();
             own.MachinePositionChanged += (sender, e) =>
             {
@@ -436,7 +446,7 @@ namespace STG_Test
             };
             System.Threading.Thread.Sleep(1000);
 
-            manager.RemoveOrder(order);
+            manager.SetOrder(InputManager.Order.None);
             timer.StartTimer();
             System.Threading.Thread.Sleep(1000);
             timer.StopTimer();

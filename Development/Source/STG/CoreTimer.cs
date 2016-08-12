@@ -12,7 +12,7 @@ namespace STG
     /// <summary>
     /// 各種動作フレームを通知するsinele-toneクラスです。
     /// </summary>
-    internal class CoreTimer
+    internal class CoreTimer : IDisposable
     {
         #region コンストラクタ/デストラクタ
         /// <summary>
@@ -190,6 +190,14 @@ namespace STG
             _Timer = new Timer();
             _Timer.Interval = interval;
             _Timer.Elapsed += new ElapsedEventHandler(_Timer_Tick);
+        }
+
+        /// <summary>
+        /// Disposeします。
+        /// </summary>
+        public void Dispose()
+        {
+            _Timer.Dispose();
         }
 
         #endregion

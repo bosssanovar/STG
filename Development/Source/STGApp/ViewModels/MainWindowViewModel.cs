@@ -29,8 +29,9 @@ namespace STGApp.ViewModels
         public MainWindowViewModel()
         {
             _Model = new Model();
+			_DirectionManager = new DirectionKeyManager();
 
-            AddListaner();
+			AddListaner();
         }
 
         #endregion
@@ -55,6 +56,8 @@ namespace STGApp.ViewModels
         /// 直前に入力されたキー
         /// </summary>
         private Key _LastKey = Key.None;
+
+		private DirectionKeyManager _DirectionManager;
 
         #endregion
 
@@ -112,31 +115,24 @@ namespace STGApp.ViewModels
         {
             if (_LastKey == key) return;
 
-            switch (key)
-            {
-                case Key.E:
-                    _Model.AddUpOrder();
-                    Console.Write("E");
-                    break;
-                case Key.D:
-                    _Model.AddDownOrder();
-                    break;
-                case Key.F:
-                    _Model.AddRightOrder();
-                    break;
-                case Key.S:
-                    _Model.AddLeftOrder();
-                    break;
-                default:
-                    break;
-            }
+			_DirectionManager.DirectionChanged += _DirectionManager_DirectionChanged;
 
-            _LastKey = key;
+			_DirectionManager.SetPressKey(key);
+
+			_DirectionManager.DirectionChanged -= _DirectionManager_DirectionChanged;
+
+			_LastKey = key;
         }
-        #endregion
 
-        #region KeyUpCommand
-        private ListenerCommand<Key> _KeyUpCommand;
+		private void _DirectionManager_DirectionChanged(object sender, DirectionChangedEventArgs e)
+		{
+			_Model.ClearOrder();
+			_Model.SetOrder(e.Order);
+		}
+		#endregion
+
+		#region KeyUpCommand
+		private ListenerCommand<Key> _KeyUpCommand;
 
         /// <summary>
         /// Key Downコマンドを取得します。
@@ -153,38 +149,26 @@ namespace STGApp.ViewModels
             }
         }
 
-        /// <summary>
-        /// Key Down時処理
-        /// </summary>
-        /// <param name="key"></param>
-        public void KeyUp(Key key)
-        {
-            switch (key)
-            {
-                case Key.E:
-                    _Model.RemoveUpOrder();
-                    break;
-                case Key.D:
-                    _Model.RemoveDownOrder();
-                    break;
-                case Key.F:
-                    _Model.RemoveRightOrder();
-                    break;
-                case Key.S:
-                    _Model.RemoveLeftOrder();
-                    break;
-                default:
-                    break;
-            }
+		/// <summary>
+		/// Key Down時処理
+		/// </summary>
+		/// <param name="key"></param>
+		public void KeyUp(Key key)
+		{
+			_DirectionManager.DirectionChanged += _DirectionManager_DirectionChanged;
 
-            if (_LastKey == key) _LastKey = Key.None;
-        }
-        #endregion
+			_DirectionManager.SetReleasedKey(key);
 
-        #region Move Right
+			_DirectionManager.DirectionChanged -= _DirectionManager_DirectionChanged;
 
-        #region AddMoveRightOrderCommand
-        private ViewModelCommand _AddMoveRightOrderCommand;
+			if (_LastKey == key) _LastKey = Key.None;
+		}
+		#endregion
+
+		#region Move Right
+
+		#region AddMoveRightOrderCommand
+		private ViewModelCommand _AddMoveRightOrderCommand;
 
         /// <summary>
         /// 右動作命令追加コマンドを取得します。
@@ -206,7 +190,7 @@ namespace STGApp.ViewModels
         /// </summary>
         public void AddMoveRightOrder()
         {
-            _Model.AddRightOrder();
+			_Model.SetOrder(STG.InputManager.Order.MoveRight);
         }
         #endregion
 
@@ -233,7 +217,7 @@ namespace STGApp.ViewModels
         /// </summary>
         public void RemoveMoveRightOrder()
         {
-            _Model.RemoveRightOrder();
+            _Model.ClearOrder();
         }
         #endregion
 
@@ -263,9 +247,9 @@ namespace STGApp.ViewModels
         /// 左動作命令追加を送ります。
         /// </summary>
         public void AddMoveLeftOrder()
-        {
-            _Model.AddLeftOrder();
-        }
+		{
+			_Model.SetOrder(STG.InputManager.Order.MoveLeft);
+		}
         #endregion
 
         #region RemoveMoveLeftOrderCommand
@@ -291,7 +275,7 @@ namespace STGApp.ViewModels
         /// </summary>
         public void RemoveMoveLeftOrder()
         {
-            _Model.RemoveLeftOrder();
+            _Model.ClearOrder();
         }
         #endregion
 
@@ -321,9 +305,9 @@ namespace STGApp.ViewModels
         /// 上動作命令追加を送ります。
         /// </summary>
         public void AddMoveUpOrder()
-        {
-            _Model.AddUpOrder();
-        }
+		{
+			_Model.SetOrder(STG.InputManager.Order.MoveUp);
+		}
         #endregion
 
         #region RemoveMoveUpOrderCommand
@@ -349,7 +333,7 @@ namespace STGApp.ViewModels
         /// </summary>
         public void RemoveMoveUpOrder()
         {
-            _Model.RemoveUpOrder();
+            _Model.ClearOrder();
         }
         #endregion
 
@@ -379,9 +363,9 @@ namespace STGApp.ViewModels
         /// 下動作命令追加を送ります。
         /// </summary>
         public void AddMoveDownOrder()
-        {
-            _Model.AddDownOrder();
-        }
+		{
+			_Model.SetOrder(STG.InputManager.Order.MoveDown);
+		}
         #endregion
 
         #region RemoveMoveDownOrderCommand
@@ -407,7 +391,7 @@ namespace STGApp.ViewModels
         /// </summary>
         public void RemoveMoveDownOrder()
         {
-            _Model.RemoveDownOrder();
+            _Model.ClearOrder();
         }
         #endregion
 

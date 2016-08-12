@@ -6,6 +6,7 @@ using System.Text;
 using Livet;
 using STG.MachinePosition;
 using STG.Parameters;
+using static STG.InputManager;
 
 namespace STGApp.Models
 {
@@ -72,11 +73,6 @@ namespace STGApp.Models
         /// <see cref="DisplayManager"/>インスタンス
         /// </summary>
         private DisplayManager _DisplayManager;
-
-        /// <summary>
-        /// <see cref="InputManager"/>インスタンス
-        /// </summary>
-        private InputManager _InputManager;
 
         #endregion
 
@@ -149,8 +145,6 @@ namespace STGApp.Models
 
             _DisplayManager = new DisplayManager(machineManager);
             _DisplayManager.MachinePositinChenged += _DisplayManager_MachinePositinChenged;
-
-            _InputManager = new InputManager(_GameManager.InputManager);
         }
 
         /// <summary>
@@ -163,70 +157,15 @@ namespace STGApp.Models
             OwnMachinePosition = e.Position;
         }
 
-        /// <summary>
-        /// 自機の左移動命令を登録します。
-        /// </summary>
-        internal void AddLeftOrder()
-        {
-            _InputManager.AddLeftOrder();
-        }
+		internal void SetOrder(Order order)
+		{
+			_GameManager.InputManager.SetOrder(order);
+		}
 
-        /// <summary>
-        /// 自機の左移動命令を削除します。
-        /// </summary>
-        internal void RemoveLeftOrder()
-        {
-            _InputManager.RemoveLeftOrder();
-        }
-
-
-        /// <summary>
-        /// 自機の右移動命令を登録します。
-        /// </summary>
-        internal void AddRightOrder()
-        {
-            _InputManager.AddRightOrder();
-        }
-
-        /// <summary>
-        /// 自機の右移動命令を削除します。
-        /// </summary>
-        internal void RemoveRightOrder()
-        {
-            _InputManager.RemoveRightOrder();
-        }
-
-        /// <summary>
-        /// 自機の上移動命令を登録します。
-        /// </summary>
-        internal void AddUpOrder()
-        {
-            _InputManager.AddUpOrder();
-        }
-
-        /// <summary>
-        /// 自機の上移動命令を削除します。
-        /// </summary>
-        internal void RemoveUpOrder()
-        {
-            _InputManager.RemoveUpOrder();
-        }
-
-        /// <summary>
-        /// 自機の下移動命令を登録します。
-        /// </summary>
-        internal void AddDownOrder()
-        {
-            _InputManager.AddDownOrder();
-        }
-
-        /// <summary>
-        /// 自機の下移動命令を削除します。
-        /// </summary>
-        internal void RemoveDownOrder()
-        {
-            _InputManager.RemoveDownOrder();
-        }
+		internal void ClearOrder()
+		{
+			_GameManager.InputManager.SetOrder(Order.None);
+		}
 
         /// <summary>
         /// ゲームを開始します。
