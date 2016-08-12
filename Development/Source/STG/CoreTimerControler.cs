@@ -98,13 +98,25 @@ namespace STG
             Contract.Requires<ArgumentException>(frames > 0);
 
             Timer.SetMachineMoveTickFrame(frames);
-            
-        }
 
-        #endregion
+		}
+
+		/// <summary>
+		/// フレーム制御用タイマーの弾丸動作用フレーム数を設定します。
+		/// </summary>
+		/// <param name="frames"></param>
+		public void SetBulletMoveTickFrame(int frames)
+		{
+			Contract.Requires<ArgumentException>(frames > 0);
+
+			Timer.SetBulletMoveTickFrame(frames);
+
+		}
+
+		#endregion
 
 
-        #region 内部クラス
-        #endregion
-    }
+		#region 内部クラス
+		#endregion
+	}
 }

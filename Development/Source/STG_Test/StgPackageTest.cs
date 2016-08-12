@@ -197,14 +197,14 @@ namespace STG_Test
     [TestFixture]
     class CoreTimerTest
     {
-		[TestCase]
+		[Test]
 		public void CoreTimer_生成破棄()
 		{
 			var timer = CoreTimer.GetInstance();
 			timer.Dispose();
 		}
 
-        [TestCase]
+        [Test]
         public void CoreTimerTest_MachineMoveTick()
         {
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
@@ -279,9 +279,84 @@ namespace STG_Test
             Assert.Throws<ArgumentException>(() => { timer.SetMachineMoveTickFrame(0); });
 
             Assert.Throws<ArgumentException>(() => { timer.SetInterval(0); });
-        }
+		}
 
-        [Test]
+		[Test]
+		public void CoreTimerTest_BulletMoveTick()
+		{
+			System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+			bool processing = true;
+
+			var timer = CoreTimer.GetInstance();
+			timer.SetInterval(CoreTimer.DefaultInterval);
+			timer.SetBulletMoveTickFrame(CoreTimer.DefaultBulletMoveTickFrame);
+			timer.BulletMoveTick += (sender, e) =>
+			{
+				sw.Stop();
+				Assert.That(sw.ElapsedMilliseconds >= CoreTimer.DefaultInterval * CoreTimer.DefaultBulletMoveTickFrame);
+				processing = false;
+			};
+			sw.Start();
+			timer.StartTimer();
+
+			while (processing)
+			{
+				if (sw.ElapsedMilliseconds > 3000)
+				{
+					timer.StopTimer();
+					sw.Stop();
+					Assert.Fail();
+					break;
+				}
+			}
+			timer.StopTimer();
+		}
+
+		[TestCase(10, 3)]
+		[TestCase(5, 30)]
+		[TestCase(5, 3)]
+		public void CoreTimerTest_BulletMoveTickパラメータ変更(int interval, int frames)
+		{
+			System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+			bool processing = true;
+
+			var timer = CoreTimer.GetInstance();
+			timer.BulletMoveTick += (sender, e) =>
+			{
+				sw.Stop();
+				Assert.That(sw.ElapsedMilliseconds >= interval * frames);
+				processing = false;
+			};
+			timer.SetInterval(interval);
+			timer.SetBulletMoveTickFrame(frames);
+			Assert.That(interval == timer.Interval);
+			Assert.That(frames == timer.BulletMoveTickFrame);
+			sw.Start();
+			timer.StartTimer();
+
+			while (processing)
+			{
+				if (sw.ElapsedMilliseconds > 3000)
+				{
+					timer.StopTimer();
+					sw.Stop();
+					Assert.Fail();
+					break;
+				}
+			}
+
+			timer.StopTimer();
+		}
+
+		[Test]
+		public void CoreTimerTest_BulletMoveパラメータ変更時例外()
+		{
+			var timer = CoreTimer.GetInstance();
+
+			Assert.Throws<ArgumentException>(() => { timer.SetBulletMoveTickFrame(0); });
+		}
+
+		[Test]
         public void CoreTimerTest_タイマーのStartとStop()
         {
             var timer = CoreTimer.GetInstance();

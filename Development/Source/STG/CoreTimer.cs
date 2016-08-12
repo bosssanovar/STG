@@ -30,26 +30,31 @@ namespace STG
         /// <summary>
         /// <see cref="Interval"/>プロパティの初期値[ms]
         /// </summary>
-        public const int DefaultInterval = 1;
+        public const int DefaultInterval = 10;
 
         /// <summary>
         /// <see cref="MachineMoveTickFrame"/>プロパティ初期値
         /// </summary>
         public const int DefaultMachineMoveTickFrame = 3;
 
-        #endregion
+		/// <summary>
+		/// <see cref="BulletMoveTickFrame"/>プロパティ初期値
+		/// </summary>
+		public const int DefaultBulletMoveTickFrame = 2;
+
+		#endregion
 
 
-        #region enum
-        #endregion
+		#region enum
+		#endregion
 
 
-        #region フィールド
+		#region フィールド
 
-        /// <summary>
-        /// 自インスタンス
-        /// </summary>
-        private static CoreTimer _Own = new CoreTimer();
+		/// <summary>
+		/// 自インスタンス
+		/// </summary>
+		private static CoreTimer _Own = new CoreTimer();
 
         /// <summary>
         /// 単位フレームタイマー
@@ -61,25 +66,35 @@ namespace STG
         /// </summary>
         private int _MachineMoveCounter = 0;
 
-        #endregion
+		/// <summary>
+		/// 弾丸移動のための単位フレームカウンタ
+		/// </summary>
+		private int _BulletMoveCounter = 0;
+
+		#endregion
 
 
-        #region プロパティ
+		#region プロパティ
 
-        /// <summary>
-        /// 単位フレームの間隔[ms]を取得します。
-        /// </summary>
-        public int Interval { get; private set; } = DefaultInterval;
+		/// <summary>
+		/// 単位フレームの間隔[ms]を取得します。
+		/// </summary>
+		public int Interval { get; private set; } = DefaultInterval;
 
         /// <summary>
         /// 機体移動の単位フレーム数を取得します。
         /// </summary>
         public int MachineMoveTickFrame { get; private set; } = DefaultMachineMoveTickFrame;
 
-        /// <summary>
-        /// タイマーが動作中かを取得します。
-        /// </summary>
-        public bool IsTimerEnabled => _Timer.Enabled;
+		/// <summary>
+		/// 弾丸移動の単位フレーム数を取得します。
+		/// </summary>
+		public int BulletMoveTickFrame { get; private set; } = DefaultBulletMoveTickFrame;
+
+		/// <summary>
+		/// タイマーが動作中かを取得します。
+		/// </summary>
+		public bool IsTimerEnabled => _Timer.Enabled;
 
         #endregion
 
@@ -99,38 +114,63 @@ namespace STG
         /// </summary>
         public event EventHandler MachineMoveTick;
 
-        #endregion
+		/// <summary>
+		/// 弾丸移動の単位タイミングを通知するイベント
+		/// </summary>
+		public event EventHandler BulletMoveTick;
+
+		#endregion
 
 
-        #region イベントハンドラ
-        #endregion
+		#region イベントハンドラ
+		#endregion
 
 
-        #region メソッド
+		#region メソッド
 
-        /// <summary>
-        /// 単位フレームでの処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _Timer_Tick(object sender, ElapsedEventArgs e)
-        {
-            if (_MachineMoveCounter <= MachineMoveTickFrame)
-            {
-                _MachineMoveCounter++;
-            }
-            else
-            {
-                MachineMoveTick?.Invoke(this, e);
-                _MachineMoveCounter = 0;
-            }
-        }
+		/// <summary>
+		/// 単位フレームでの処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void _Timer_Tick(object sender, ElapsedEventArgs e)
+		{
+			MachineMoveTickHandler(e);
 
-        /// <summary>
-        /// インスタンスを取得します。
-        /// </summary>
-        /// <returns></returns>
-        public static CoreTimer GetInstance()
+			BulletMoveTickHandler(e);
+		}
+
+		private void BulletMoveTickHandler(ElapsedEventArgs e)
+		{
+			if (_BulletMoveCounter <= BulletMoveTickFrame)
+			{
+				_BulletMoveCounter++;
+			}
+			else
+			{
+				BulletMoveTick?.Invoke(this, e);
+				_BulletMoveCounter = 0;
+			}
+		}
+
+		private void MachineMoveTickHandler(ElapsedEventArgs e)
+		{
+			if (_MachineMoveCounter <= MachineMoveTickFrame)
+			{
+				_MachineMoveCounter++;
+			}
+			else
+			{
+				MachineMoveTick?.Invoke(this, e);
+				_MachineMoveCounter = 0;
+			}
+		}
+
+		/// <summary>
+		/// インスタンスを取得します。
+		/// </summary>
+		/// <returns></returns>
+		public static CoreTimer GetInstance()
         {
             Contract.Ensures(Contract.Result<CoreTimer>() != null);
 
@@ -158,12 +198,23 @@ namespace STG
             Contract.Requires<ArgumentException>(val > 0);
 
             MachineMoveTickFrame = val;
-        }
+		}
 
-        /// <summary>
-        /// タイマーを開始します。
-        /// </summary>
-        public void StartTimer()
+		/// <summary>
+		/// 弾丸移動の単位フレーム数を変更します。
+		/// </summary>
+		/// <param name="frames"></param>
+		public void SetBulletMoveTickFrame(int frames)
+		{
+			Contract.Requires<ArgumentException>(frames > 0);
+
+			BulletMoveTickFrame = frames;
+		}
+
+		/// <summary>
+		/// タイマーを開始します。
+		/// </summary>
+		public void StartTimer()
         {
             _Timer.Start();
         }
